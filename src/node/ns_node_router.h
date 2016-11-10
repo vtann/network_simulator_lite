@@ -29,10 +29,7 @@ class router : public node
     
     ns_ns::interfaces get_all_interfaces() const;
     
-    ns_ns::links get_all_links() const;
-
     private:
     ns_ns::interfaces interface_list;
-    ns_ns::links link_list;
 };
 

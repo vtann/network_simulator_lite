@@ -21,8 +21,3 @@ ns_ns::interfaces router::get_all_interfaces() const
     return interface_list;
 }  
 
-ns_ns::links router::get_all_links() const
-{
-    return link_list;
-}  
-
