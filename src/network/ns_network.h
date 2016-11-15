@@ -24,13 +24,19 @@ class router_network
      
     ~router_network();
 
-    int add_router();
+    void add_router(router* new_router);
+
+    void add_link(router_link* new_link);
 
     int number_of_routers();
     
+    int number_of_links();
+    
     void calculate_shortest_path();
     
-    void set_routing_algorithm_param();       
+    void set_routing_algorithm_param();      
+    
+    //router_link 
  
     private:
     std::vector<router*> router_list;

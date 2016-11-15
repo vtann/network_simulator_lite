@@ -19,9 +19,13 @@
 class router_interface : public node_interface
 {
     public:
-    router_interface(int if_id=-1);
+    router_interface(int node_id, int if_id=-1);
     
     ~router_interface(); 
+
+    int get_router_id() const;
+
+    void set_router_id(int id);
   
     std::string get_interface_address() const;
     
@@ -31,18 +35,29 @@ class router_interface : public node_interface
 
     void set_queue_size(int q_size);
  
+    bool get_is_connected_flag() const;
+
+    void set_is_connected_flag(bool flag);
+
     int get_interface_speed() const;
+    
+    void set_mask(int ip_mask);
+    
+    int get_mask() const;
 
     void set_interface_speed(int if_speed);
  
-    std::vector<std::string> get_network_address() const;
+    std::string get_network_address() const;
     
     void set_network_address(std::string& ip_addr);
    
     private:
+    int router_id;
     std::string mac_address;
     int queue_size;
     int interface_speed;
-    std::vector<std::string> ip_address;
-    ns_ns::packets ethr_packets; 
+    std::string ip_address;
+    int mask;
+    ns_ns::packets ethr_packets;
+    bool is_connected_flag;
 }; 

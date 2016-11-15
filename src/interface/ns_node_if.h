@@ -15,7 +15,7 @@ class node_interface
         return interface_id;
     }
     
-    int set_interface_id(int if_id)
+    void set_interface_id(int if_id)
     {
         interface_id = if_id;   
     }    

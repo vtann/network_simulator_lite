@@ -11,7 +11,7 @@ shortest_path::shortest_path(int v)
 
 int shortest_path::add_edge(int src_vertex, int dst_vertex, double cost)
 {
-    adjacency_list[src_vertex].push_back(std::make_pair(dst_vertex, cost));
+    adjacency_list[src_vertex - 1].push_back(std::make_pair(dst_vertex, cost));
     return 0;       
 }
 
@@ -54,9 +54,9 @@ void shortest_path::dijikstra_compute_paths(int source,
     }
 }
  
-std::list<int> shortest_path::dijkstra_get_shortest_path_to(int vertex, const std::vector<int> &previous)
+std::vector<int> shortest_path::dijkstra_get_shortest_path_to(int vertex, const std::vector<int> &previous)
 {
-    std::list<int> path;
+    std::vector<int> path;
     for ( ; vertex != -1; vertex = previous[vertex])
     {
         path.push_front(vertex);

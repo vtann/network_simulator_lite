@@ -10,17 +10,7 @@ typedef struct routing_entry
    std::string gateway_ip_address;  
 }routing_entry;
 
-class routing_table
-{
-    routing_table();
+std::list<routing_entry*> get_routing_table();  
 
-    ~routing_table();
-   
-    int add_routing_table_entries(std::string dst_address, int mask, int interface);
+int add_routing_table_entry(std::string dst_address, int mask, int interface, int gw_id, std::string gw_address);
     
-    std::list<routing_entry*> get_routing_table();  
-
-    private:
-    std::list<routing_entry*> list_routing_table;
-};
-

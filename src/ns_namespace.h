@@ -14,20 +14,15 @@ namespace ns_ns
     typedef std::vector<router_interface*> interfaces;
     typedef std::vector<router_link*> links;
     typedef std::vector<ethr_pkt*> packets; 
-    /*enum
+    enum graph_type
     {
         DIRECTED_GRAPH   = 0, 
         UNDIRECTED_GRAPH
-    }graph_type; 
-    enum
+    };
+    
+    enum return_type
     {
         OK     = 0,
         NOT_OK
-    }return_type;
-
-    enum 
-    {
-        FALSE = 0,
-        TRUE = 1
-    }result;*/
+    }; 
 }

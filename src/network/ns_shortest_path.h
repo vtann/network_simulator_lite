@@ -23,7 +23,7 @@ class shortest_path
     void dijikstra_compute_paths(int source,
                                  std::vector<double> &min_distance,
                                  std::vector<int> &previous);
-    std::list<int> dijkstra_get_shortest_path_to(int vertex, const std::vector<int> &previous);
+    std::vector<int> dijkstra_get_shortest_path_to(int vertex, const std::vector<int> &previous);
      
     private:
     int vertices;
