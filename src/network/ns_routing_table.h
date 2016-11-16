@@ -12,5 +12,5 @@ typedef struct routing_entry
 
 std::list<routing_entry*> get_routing_table();  
 
-int add_routing_table_entry(std::string dst_address, int mask, int interface, int gw_id, std::string gw_address);
+void add_routing_table_entry(std::string dst_address, int mask, int interface, int gw_id, std::string gw_address);
     

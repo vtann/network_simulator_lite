@@ -17,6 +17,11 @@
 #include "ns_shortest_path.h"
 #endif // __NS_SHORTEST_PATH_H__ 
 
+#ifndef __NS_ROUTING_TABLE_H__
+#define __NS_ROUTING_TABLE_H__
+#include "ns_routing_table.h"
+#endif // __NS_ROUTING_TABLE_H__ 
+
 class router_network
 {
     public:
@@ -36,7 +41,7 @@ class router_network
     
     void set_routing_algorithm_param();      
     
-    //router_link 
+    router_link* find_link(int src_vertex, int dst_vertex);
  
     private:
     std::vector<router*> router_list;
