@@ -83,13 +83,23 @@ ns_node_router_if.o : $(USER_IF_DIR)/ns_node_router_if.cpp $(USER_IF_DIR)/ns_nod
 ns_node_router_link.o : $(USER_LINK_DIR)/ns_node_router_link.cpp $(USER_LINK_DIR)/ns_node_router_link.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_LINK_DIR)/ns_node_router_link.cpp
 
+ns_arp_table.o : $(USER_NETWORK_DIR)/ns_arp_table.cpp $(USER_NETWORK_DIR)/ns_arp_table.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_arp_table.cpp
+
+ns_routing_table.o : $(USER_NETWORK_DIR)/ns_routing_table.cpp $(USER_NETWORK_DIR)/ns_routing_table.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_routing_table.cpp
+
+ns_shortest_path.o : $(USER_NETWORK_DIR)/ns_shortest_path.cpp $(USER_NETWORK_DIR)/ns_shortest_path.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_shortest_path.cpp
+
 ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_network.cpp
 
 ns_network_unittest.o : ns_network_test.cpp \
                      $(USER_DIR)/ns_node_router.h $(USER_IF_DIR)/ns_node_router_if.h \
-                     $(USER_LINK_DIR)/ns_node_router_link.h $(USER_NETWORK_DIR)/ns_network.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ns_node_router_link_test.cpp 
+                     $(USER_LINK_DIR)/ns_node_router_link.h $(USER_NETWORK_DIR)/ns_arp_table.h $(USER_NETWORK_DIR)/ns_routing_table.h \
+                     $(USER_NETWORK_DIR)/ns_shortest_path.h $(USER_NETWORK_DIR)/ns_network.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ns_network_test.cpp 
 
-ns_network_unittest : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_network.o ns_network_test.o gtest_main.a
+ns_network_unittest : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_network_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
