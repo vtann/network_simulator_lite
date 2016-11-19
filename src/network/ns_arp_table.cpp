@@ -19,3 +19,7 @@ std::list<arp_entry*> get_arp_table()
     return list_arp_table;
 } 
 
+int get_num_of_arp_table_entries()
+{
+   return list_arp_table.size();
+}

@@ -22,3 +22,7 @@ std::list<routing_entry*> get_routing_table()
     return list_routing_table;
 } 
 
+int get_num_of_routing_table_entries()
+{
+    return list_routing_table.size();
+}

@@ -14,3 +14,4 @@ std::list<routing_entry*> get_routing_table();
 
 void add_routing_table_entry(std::string dst_address, int mask, int interface, int gw_id, std::string gw_address);
     
+int get_num_of_routing_table_entries();

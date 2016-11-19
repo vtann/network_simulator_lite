@@ -22,6 +22,11 @@
 #include "ns_routing_table.h"
 #endif // __NS_ROUTING_TABLE_H__ 
 
+#ifndef __NS_ARP_TABLE_H__
+#define __NS_ARP_TABLE_H__
+#include "ns_arp_table.h"
+#endif // __NS_ARP_TABLE_H__ 
+
 class router_network
 {
     public:
@@ -37,7 +42,7 @@ class router_network
     
     int number_of_links();
     
-    void calculate_shortest_path();
+    void calculate_shortest_path(ns_ns::graph_type graph);
     
     void set_routing_algorithm_param();      
     

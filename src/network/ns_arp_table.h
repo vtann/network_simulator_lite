@@ -11,3 +11,4 @@ std::list<arp_entry*> get_arp_table();
 
 void add_arp_table_entry(std::string gw_network_address, std::string gw_mac_address);
     
+int get_num_of_arp_table_entries();
