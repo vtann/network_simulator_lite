@@ -209,12 +209,11 @@ TEST(test_network, shortest_path_creation_3)
     std::vector<int> expected_path;
     expected_path.push_back(2);  
     expected_path.push_back(1);  
-    expected_path.push_back(0);  
     EXPECT_EQ(expected_path, path); 
     
     min_distance.clear();
     previous.clear();
-    adjacency_list.dijikstra_compute_paths(1, min_distance, previous);
+    adjacency_list.dijikstra_compute_paths(0, min_distance, previous);
     path.clear();
     adjacency_list.dijkstra_get_shortest_path_to(path, 6, previous);
     expected_path.clear();
