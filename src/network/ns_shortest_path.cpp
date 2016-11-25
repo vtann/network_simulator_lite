@@ -55,7 +55,6 @@ void shortest_path::dijikstra_compute_paths(int source,
 {
     min_distance.clear();
     min_distance.resize(vertices, std::numeric_limits<double>::infinity());
-    //min_distance.resize(vertices, 1000);
     min_distance.resize(vertices, 0);
     previous.clear();
     previous.resize(vertices, -1);
@@ -64,7 +63,8 @@ void shortest_path::dijikstra_compute_paths(int source,
     std::vector<std::pair<std::pair<int, int>, double> > vertex_queue;
 
     evaluated_nodes.push_back(source);
-   
+    min_distance[source] = 0;  
+ 
     //std::cout << "Number of nodes: " << vertices << std::endl;  
     for (unsigned int index = 0; index < routing_vertices.size(); index++)
     {
@@ -91,14 +91,15 @@ void shortest_path::dijikstra_compute_paths(int source,
         int dst = src_dst.second;  
         double dist = vertex_queue.begin()->second;
        
-        //std::cout << "-----------------------" << std::endl;
+        /*std::cout << "-----------------------" << std::endl;
         for (std::vector<std::pair <std::pair<int, int>, double> >::const_iterator index = vertex_queue.begin(); index != vertex_queue.end(); index++)
         {  
-            //std::pair<int, int> v = (*index).first;
-            //std::cout << "Source Vertex: " << v.first;
-            //std::cout << " Dest Vertex: " << v.second;
-            //std::cout << " Vertex distance: " <<(*index).second << std::endl;
+            std::pair<int, int> v = (*index).first;
+            std::cout << "Source Vertex: " << v.first;
+            std::cout << " Dest Vertex: " << v.second;
+            std::cout << " Vertex distance: " <<(*index).second << std::endl;
         }
+        std::cout << "-----------------------" << std::endl;*/
 
         vertex_queue.erase(vertex_queue.begin());
         
@@ -111,26 +112,25 @@ void shortest_path::dijikstra_compute_paths(int source,
             unreachable_nodes.erase(std::remove(unreachable_nodes.begin(), unreachable_nodes.end(), dst), unreachable_nodes.end()); 
             evaluated_nodes.push_back(dst);
             
-            //std::cout << "Min distance: " << min_distance[dst] << std::endl;  
 	    if (dist < min_distance[dst]) 
             {
-	        min_distance[dst] = dist + min_distance[src];
+                //std::cout << "***********************" << std::endl;
+	        min_distance[dst] = dist;
+                //std::cout << "Min distance[" << src << "]: " << min_distance[src] << std::endl;  
+                //std::cout << "Distance: " << dist << std::endl;  
+                //std::cout << "Min distance[" << dst << "]: " << min_distance[dst] << std::endl;  
 	        previous[dst] = src;
                 //std::cout << "Previous distance: " << previous[dst] << std::endl; 
                 for (std::vector<std::pair <int, double> >::const_iterator neighbor_iter = adjacency_list[dst].begin();
                      neighbor_iter != adjacency_list[dst].end();
                      neighbor_iter++)
                 {
-                    //std::cout << "Source Vertex: " << dst;
-                    //std::cout << " Dest Vertex: " << (*neighbor_iter).first;
-                    //std::cout << " Vertex distance: " <<(*neighbor_iter).second;
-                    //std::cout << " Total distance: " << dist << std::endl;
-                    vertex_queue.push_back(std::make_pair(std::make_pair(dst, (*neighbor_iter).first), ((*neighbor_iter).second + dist)));  
+                    vertex_queue.push_back(std::make_pair(std::make_pair(dst, (*neighbor_iter).first), ((*neighbor_iter).second + min_distance[dst])));  
                 }
                 sort_vertex_queue(vertex_queue);
+                //std::cout << "***********************" << std::endl;
 	    }
         }
-        //std::cout << "-----------------------" << std::endl;
     }
 }
  

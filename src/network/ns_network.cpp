@@ -21,6 +21,18 @@ int router_network::number_of_links()
     return link_list.size(); 
 }
 
+router* router_network::get_router(int node_id)
+{
+    for (int index = 0; index < router_list.size(); index++)
+    {
+        if (node_id == router_list[index]->get_node_id())
+        {
+            return router_list[index]; 
+        } 
+    }
+    return NULL;
+}
+
 void router_network::add_router(router* new_router)
 {
     router_list.push_back(new_router);
