@@ -6,6 +6,7 @@
 router::router(int n) : node(n)
 {
     //interface_list = NULL;
+      
 } 
 
 router::~router()
