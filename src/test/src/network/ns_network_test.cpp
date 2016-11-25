@@ -72,7 +72,16 @@ TEST(test_network, network_creation)
     network.add_router(&router_1);
     network.add_router(&router_2);
     network.add_router(&router_3);
-     
+    
+    router *r_temp = network.get_router(0);
+    EXPECT_EQ(0, r_temp->get_node_id());
+    r_temp = network.get_router(1);
+    EXPECT_EQ(1, r_temp->get_node_id());
+    r_temp = network.get_router(2);
+    EXPECT_EQ(2, r_temp->get_node_id());
+    r_temp = network.get_router(3);
+    EXPECT_EQ(NULL, r_temp);
+    
     EXPECT_EQ(3, network.number_of_routers()); 
     
     network.add_link(&router_link_1);
@@ -204,6 +213,13 @@ TEST(test_network, shortest_path_creation_3)
     std::vector<double> min_distance;
     std::vector<int> previous;
     adjacency_list.dijikstra_compute_paths(1, min_distance, previous);
+    EXPECT_EQ(1, min_distance[0]); 
+    EXPECT_EQ(0, min_distance[1]); 
+    EXPECT_EQ(1, min_distance[2]); 
+    EXPECT_EQ(2, min_distance[3]); 
+    EXPECT_EQ(3, min_distance[4]); 
+    EXPECT_EQ(4, min_distance[5]); 
+    EXPECT_EQ(5, min_distance[6]); 
     std::vector<int> path;
     adjacency_list.dijkstra_get_shortest_path_to(path, 2, previous);
     std::vector<int> expected_path;
@@ -224,7 +240,14 @@ TEST(test_network, shortest_path_creation_3)
     expected_path.push_back(2);  
     expected_path.push_back(1);  
     expected_path.push_back(0);  
-    EXPECT_EQ(expected_path, path); 
+    EXPECT_EQ(expected_path, path);
+    EXPECT_EQ(0, min_distance[0]); 
+    EXPECT_EQ(1, min_distance[1]); 
+    EXPECT_EQ(2, min_distance[2]); 
+    EXPECT_EQ(3, min_distance[3]); 
+    EXPECT_EQ(4, min_distance[4]); 
+    EXPECT_EQ(5, min_distance[5]); 
+    EXPECT_EQ(6, min_distance[6]); 
 }
 
 
