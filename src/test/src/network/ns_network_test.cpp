@@ -1,5 +1,6 @@
 #include <limits.h>
 #include "../../../network/ns_network.h"
+#include "../../../network/ns_timer.h"
 #include "gtest/gtest.h"
 #include <memory>
 
@@ -250,6 +251,28 @@ TEST(test_network, shortest_path_creation_3)
     EXPECT_EQ(6, min_distance[6]); 
 }
 
+TEST(test_network, timer_test)
+{
+    timer t;
+   
+    t.start_timer();
+    EXPECT_EQ(true, t.is_timer_running());
+   
+    sleep(1);
+ 
+    t.stop_timer();
+    EXPECT_EQ(false, t.is_timer_running());
+
+    EXPECT_EQ(1, t.get_elapsed_time_in_sec());
+
+    t.reset_timer();
+    sleep(1);
+    EXPECT_EQ(1, t.get_elapsed_time_in_sec());
+ 
+    t.stop_timer();
+    EXPECT_EQ(false, t.is_timer_running());
+
+}
 
 
 
