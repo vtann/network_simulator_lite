@@ -1,20 +1,14 @@
 #include <iostream>
 #include <map>
 
-#ifndef __NS_NODE_LINK_H__
-#define __NS_NODE_LINK_H__
 #include "ns_node_link.h"
-#endif //__NS_NODE_LINK_H__
 
-#ifndef __NS_NODE_ROUTER_H__
-#define __NS_NODE_ROUTER_H__
 #include "../node/ns_node_router.h"
-#endif // __NS_NODE_ROUTER_H__ 
 
-#ifndef __NS_NODE_ROUTER_IF_H__
-#define __NS_NODE_ROUTER_IF_H__
 #include "../interface/ns_node_router_if.h"
-#endif // __NS_NODE_ROUTER_IF_H__ 
+
+#ifndef __NS_NODE_ROUTER_LINK_H__
+#define __NS_NODE_ROUTER_LINK_H__
 
 class router_link : public node_link
 {
@@ -52,3 +46,5 @@ class router_link : public node_link
     router_interface* dst_interface; 
     double link_cost;
 };
+
+#endif // __NS_NODE_ROUTER_LINK_H__ 

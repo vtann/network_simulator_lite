@@ -1,7 +1,4 @@
-#ifndef __NS_NODE_ROUTER_LINK_H__
-#define __NS_NODE_ROUTER_LINK_H__
 #include "ns_node_router_link.h"
-#endif // __NS_NODE_ROUTER_LINK_H__ 
 
 using namespace ns_ns;
 
