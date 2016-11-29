@@ -14,6 +14,7 @@ USER_IF_DIR = interface
 USER_LINK_DIR = link
 USER_NETWORK_DIR = network
 USER_BIN_DIR = bin
+USER_PACKET_DIR = packet
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
@@ -53,5 +54,9 @@ ns_shortest_path.o : $(USER_NETWORK_DIR)/ns_shortest_path.cpp $(USER_NETWORK_DIR
 ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_network.cpp
 
-network_simulator : main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o
+ns_packet_ethr.o : $(USER_PACKET_DIR)/ns_packet_ethr.cpp $(USER_PACKET_DIR)/ns_packet_ethr.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_PACKET_DIR)/ns_packet_ethr.cpp
+
+network_simulator : main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o 
 	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
+

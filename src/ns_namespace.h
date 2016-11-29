@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
 
-//class router;
+#ifndef __NS_NAMESPACE_H__
+#define __NS_NAMESPACE_H__
+
+class router;
 class router_interface;
 class router_link;
 class ethr_pkt;
@@ -11,7 +14,11 @@ namespace ns_ns
     const int ipv4_header_size = 20;  
     const int ipv6_header_size = 40;  
     const int raw_eth_header_size = 14;  
-    const int l2_ethertype = 2048;
+    const int RAW_ETHR_L2_ETHERTYPE = 2048;
+    const int DEFAULT_TTL_VALUE = 64; 
+    const int RAW_ETHR_L3_ETHERTYPE = 255;
+    const int DEFAULT_IPV4_HEADER_SIZE = 20;
+    const int DEFAULT_IPV4_PACKET_SIZE = 64;
     const int dst_mac_address_offset = 0;  
     const int src_mac_address_offset = 6;  
     const int l2_ethertype_offset = 12;  
@@ -25,6 +32,7 @@ namespace ns_ns
     const int ip_header_checksum_offset = 24;  
     const int src_network_address_offset = 26;  
     const int dst_network_address_offset = 30;  
+    typedef std::vector<router*> routers;
     typedef std::vector<router_interface*> interfaces;
     typedef std::vector<router_link*> links;
     typedef std::vector<ethr_pkt*> packets; 
@@ -54,3 +62,5 @@ namespace ns_ns
        DST_IP_ADDRESS
     }; 
 }
+
+#endif // __NS_NAMESPACE_H__
