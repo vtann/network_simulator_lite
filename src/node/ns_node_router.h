@@ -1,17 +1,11 @@
-#ifndef __NS_NODE_H__
-#define __NS_NODE_H__
 #include "ns_node.h"
-#endif //  __NS_NODE_H__
 
-#ifndef __NS_NAMESPACE_H__
-#define __NS_NAMESPACE_H__
 #include "../ns_namespace.h"
-#endif // __NS_NAMESPACE_H__
 
-#ifndef __NS_NODE_ROUTER_IF_H__
-#define __NS_NODE_ROUTER_IF_H__
 #include "../interface/ns_node_router_if.h"
-#endif // __NS_NODE_ROUTER_IF_H__ 
+
+#ifndef __NS_NODE_ROUTER_H__
+#define __NS_NODE_ROUTER_H__
 
 class router : public node 
 {
@@ -34,3 +28,4 @@ class router : public node
     ns_ns::interfaces interface_list;
 };
 
+#endif // __NS_NODE_ROUTER_H__

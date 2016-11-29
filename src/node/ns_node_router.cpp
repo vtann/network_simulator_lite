@@ -1,7 +1,4 @@
-#ifndef __NS_NODE_ROUTER_H__
-#define __NS_NODE_ROUTER_H__
 #include "ns_node_router.h"
-#endif // __NS_NODE_ROUTER_H__
 
 router::router(int n) : node(n)
 {

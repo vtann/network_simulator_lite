@@ -1,5 +1,8 @@
 #include <iostream>
 
+#ifndef __NS_NODE_H__
+#define __NS_NODE_H__
+
 class node
 {
     public:
@@ -19,3 +22,4 @@ class node
     int node_id; 
 };
 
+#endif //  __NS_NODE_H__
