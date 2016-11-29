@@ -1,5 +1,8 @@
 #include <iostream>
 
+#ifndef __NS_NODE_IF_H__
+#define __NS_NODE_IF_H__
+
 class node_interface
 {
     public:
@@ -23,3 +26,5 @@ class node_interface
     private:
     int interface_id;
 }; 
+
+#endif //__NS_NODE_IF_H__

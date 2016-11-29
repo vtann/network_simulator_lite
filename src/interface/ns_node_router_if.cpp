@@ -1,7 +1,4 @@
-#ifndef __NS_NODE_ROUTER_IF_H__
-#define __NS_NODE_ROUTER_IF_H__
 #include "ns_node_router_if.h"
-#endif //__NS_NODE_ROUTER_IF_H__
 
 router_interface::router_interface(int node_id, int if_id) : node_interface(if_id)
 {
