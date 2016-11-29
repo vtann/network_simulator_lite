@@ -1,7 +1,21 @@
+#include <list>
+#include <sstream>
+#include <stdint.h>
+#include <algorithm>
+#include <stdexcept>
+#include <string>
+
 #ifndef __NS_PACKET_H__
 #define __NS_PACKET_H__
 #include "ns_packet.h"
 #endif //__NS_PACKET_H__
+
+#ifndef __NS_NAMESPACE_H__
+#define __NS_NAMESPACE_H__
+#include "../ns_namespace.h"
+#endif // __NS_NAMESPACE_H__
+
+using namespace ns_ns;
 
 class ethr_pkt : public packet
 {
@@ -16,27 +30,68 @@ class ethr_pkt : public packet
 
     int get_l2_ethertype() const;
    
+    int get_ip_version_type() const;
+
+    int get_ip_header_length() const;
+
     int get_dscp_priority() const;
+
+    int get_ip_total_length() const;
+
+    int get_packet_identifier() const;
+
+    int get_more_frag_flag() const;
+
+    int get_dont_frag_flag() const;
+
+    int get_packet_offset() const;
 
     int get_ttl() const;
   
-    std::string get_packet() const;
-   
-    void set_src_mac_address(std::string src_mac_addr);
+    int get_protocol() const;
 
-    void set_dst_mac_address(std::string dst_mac_addr);
+    int get_ip_header_checksum() const;
 
-    void set_src_ipv4_address(std::string src_ip_addr);
+    void set_src_mac_address(unsigned char* pkt, std::string src_mac_addr);
 
-    void set_dst_ipv4_address(std::string dst_ip_addr);
+    void set_dst_mac_address(unsigned char* pkt, std::string dst_mac_addr);
 
-    void set_l2_ethertype(int ethrtype);
+    void set_src_ipv4_address(unsigned char* pkt, std::string src_ip_addr);
 
-    void set_dscp_priority(int priority);
+    void set_dst_ipv4_address(unsigned char* pkt, std::string dst_ip_addr);
 
-    void set_ttl(int value);
+    void set_l2_ethertype(unsigned char* pkt, int ethrtype);
 
-    void set_packet(std::string packet);
+    void set_ip_version_type(unsigned char* pkt, int type);
+
+    void set_ip_header_length(unsigned char* pkt, int length);
+
+    void set_dscp_priority(unsigned char* pkt, int priority);
+
+    void set_ip_total_length(unsigned char* pkt, int length);
+
+    void set_packet_identifier(unsigned char* pkt, int id);
+
+    void set_fragment_flags(unsigned char* pkt, bool more_frag, bool dont_frag, int frag_offset);
+
+    void set_ttl(unsigned char* pkt, int value);
+
+    void set_protocol(unsigned char* pkt, int value);
+
+    void set_ip_header_checksum(unsigned char* pkt, int checksum);
+
+    int int_string_to_int(std::string ip_addr_seg);
+
+    int hex_string_to_int(std::string mac_addr_seg);
+
+    std::string int_to_string(int x);
+
+    int hex_to_int(std::string hex_string);
+
+    void string_to_substring(unsigned char* pkt, std::string str, std::string delim, ns_ns::packet_param_type param);
+
+    void construct_pkt(unsigned char* packet, std::string src_mac_addr, std::string dst_mac_addr,
+                             std::string src_ip_addr, std::string dst_ip_addr);
 
     private:
     std::string src_mac_address; 
@@ -44,7 +99,15 @@ class ethr_pkt : public packet
     std::string src_ipv4_address; 
     std::string dst_ipv4_address;
     int l2_ethertype;
+    int ip_version_type;
+    int ip_header_length;
     int dscp_priority;
+    int ip_total_length;
+    int packet_identifier; 
+    bool more_frag_flag;
+    bool dont_frag_flag;
+    int frag_offset_identifier;
     int ttl;
-    std::string full_packet; 
+    int l3_protocol_type;
+    int ip_header_checksum;
 };
