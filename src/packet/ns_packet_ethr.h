@@ -4,16 +4,14 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+#include <iomanip>
 
-#ifndef __NS_PACKET_H__
-#define __NS_PACKET_H__
 #include "ns_packet.h"
-#endif //__NS_PACKET_H__
 
-#ifndef __NS_NAMESPACE_H__
-#define __NS_NAMESPACE_H__
 #include "../ns_namespace.h"
-#endif // __NS_NAMESPACE_H__
+
+#ifndef __NS_PACKET_ETHR_H__
+#define __NS_PACKET_ETHR_H__
 
 using namespace ns_ns;
 
@@ -72,13 +70,41 @@ class ethr_pkt : public packet
 
     void set_packet_identifier(unsigned char* pkt, int id);
 
-    void set_fragment_flags(unsigned char* pkt, bool more_frag, bool dont_frag, int frag_offset);
+    void set_fragment_flags(unsigned char* pkt, bool dont_frag, bool more_frag, int frag_offset);
 
     void set_ttl(unsigned char* pkt, int value);
 
     void set_protocol(unsigned char* pkt, int value);
 
     void set_ip_header_checksum(unsigned char* pkt, int checksum);
+
+    void parse_src_mac_address(unsigned char* pkt);
+
+    void parse_dst_mac_address(unsigned char* pkt);
+
+    void parse_src_ipv4_address(unsigned char* pkt);
+
+    void parse_dst_ipv4_address(unsigned char* pkt);
+
+    void parse_l2_ethertype(unsigned char* pkt);
+
+    void parse_ip_version_type(unsigned char* pkt);
+
+    void parse_ip_header_length(unsigned char* pkt);
+
+    void parse_dscp_priority(unsigned char* pkt);
+
+    void parse_ip_total_length(unsigned char* pkt);
+
+    void parse_packet_identifier(unsigned char* pkt);
+
+    void parse_fragment_flags(unsigned char* pkt);
+
+    void parse_ttl(unsigned char* pkt);
+
+    void parse_protocol(unsigned char* pkt);
+
+    void parse_ip_header_checksum(unsigned char* pkt);
 
     int int_string_to_int(std::string ip_addr_seg);
 
@@ -92,6 +118,8 @@ class ethr_pkt : public packet
 
     void construct_pkt(unsigned char* packet, std::string src_mac_addr, std::string dst_mac_addr,
                              std::string src_ip_addr, std::string dst_ip_addr);
+
+    void parse_pkt(unsigned char* packet);
 
     private:
     std::string src_mac_address; 
@@ -111,3 +139,5 @@ class ethr_pkt : public packet
     int l3_protocol_type;
     int ip_header_checksum;
 };
+
+#endif //__NS_PACKET_ETHR_H__

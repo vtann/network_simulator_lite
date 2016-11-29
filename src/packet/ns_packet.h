@@ -1,5 +1,8 @@
 #include <iostream>
 
+#ifndef __NS_PACKET_H__
+#define __NS_PACKET_H__
+
 class packet
 {
     public:
@@ -12,3 +15,4 @@ class packet
     int packet_size; 
 };
 
+#endif //__NS_PACKET_H__

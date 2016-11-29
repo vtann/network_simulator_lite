@@ -1,7 +1,6 @@
-#ifndef __NS_PACKET_ETHR_H__
-#define __NS_PACKET_ETHR_H__
 #include "ns_packet_ethr.h"
-#endif //__NS_PACKET_ETHR_H__
+
+using namespace std;
 
 static int get_offset(ns_ns::packet_param_type param);
 
@@ -148,12 +147,12 @@ void ethr_pkt::set_packet_identifier(unsigned char* pkt, int id)
     pkt[ip_identifier_offset + 1] = (id & 0x00FF);
 }
 
-void ethr_pkt::set_fragment_flags(unsigned char* pkt, bool more_frag, bool dont_frag, int frag_offset)
+void ethr_pkt::set_fragment_flags(unsigned char* pkt, bool dont_frag, bool more_frag, int frag_offset)
 {
     more_frag_flag = more_frag;
     dont_frag_flag = dont_frag;
     frag_offset_identifier = frag_offset;
-    pkt[ip_fragment_offset] = (((frag_offset & 0xFF00) >> 8) | (dont_frag << 13) | (more_frag << 14));
+    pkt[ip_fragment_offset] = (((frag_offset & 0xFF00) >> 8) | (dont_frag << 6) | (more_frag << 5));
     pkt[ip_fragment_offset + 1] = (frag_offset & 0x00FF);
 }
 
@@ -226,6 +225,130 @@ void ethr_pkt::string_to_substring(unsigned char* pkt, std::string str, std::str
     }
 }  
 
+void ethr_pkt::parse_src_mac_address(unsigned char* pkt)
+{
+    std::stringstream mac_nib1;
+    mac_nib1 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset]);
+    std::stringstream mac_nib2;
+    mac_nib2 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset + 1]);
+    std::stringstream mac_nib3;
+    mac_nib3 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset + 2]);
+    std::stringstream mac_nib4;
+    mac_nib4 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset + 3]);
+    std::stringstream mac_nib5;
+    mac_nib5 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset + 4]);
+    std::stringstream mac_nib6;
+    mac_nib6 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[src_mac_address_offset + 5]);
+    src_mac_address = mac_nib1.str() + ":" + mac_nib2.str() + ":" + mac_nib3.str() + ":" 
+                      + mac_nib4.str() + ":" + mac_nib5.str() + ":" + mac_nib6.str(); 
+}
+
+void ethr_pkt::parse_dst_mac_address(unsigned char* pkt)
+{
+    std::stringstream mac_nib1;
+    mac_nib1 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset]);
+    std::stringstream mac_nib2;
+    mac_nib2 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset + 1]);
+    std::stringstream mac_nib3;
+    mac_nib3 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset + 2]);
+    std::stringstream mac_nib4;
+    mac_nib4 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset + 3]);
+    std::stringstream mac_nib5;
+    mac_nib5 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset + 4]);
+    std::stringstream mac_nib6;
+    mac_nib6 << std::setfill('0') << std::setw(2) << std::uppercase << std::hex << static_cast<int>(pkt[dst_mac_address_offset + 5]);
+    dst_mac_address = mac_nib1.str() + ":" + mac_nib2.str() + ":" + mac_nib3.str() + ":" 
+                      + mac_nib4.str() + ":" + mac_nib5.str() + ":" + mac_nib6.str(); 
+}
+
+void ethr_pkt::parse_src_ipv4_address(unsigned char* pkt)
+{
+    std::stringstream ip_nib1;
+    ip_nib1 << static_cast<int>(pkt[src_network_address_offset]); 
+    std::stringstream ip_nib2;
+    ip_nib2 << static_cast<int>(pkt[src_network_address_offset + 1]); 
+    std::stringstream ip_nib3;
+    ip_nib3 << static_cast<int>(pkt[src_network_address_offset + 2]); 
+    std::stringstream ip_nib4;
+    ip_nib4 << static_cast<int>(pkt[src_network_address_offset + 3]); 
+    src_ipv4_address = ip_nib1.str() + "." + ip_nib2.str() + "." + ip_nib3.str() + "." + ip_nib4.str(); 
+}
+
+void ethr_pkt::parse_dst_ipv4_address(unsigned char* pkt)
+{
+    std::stringstream ip_nib1;
+    ip_nib1 << static_cast<int>(pkt[dst_network_address_offset]); 
+    std::stringstream ip_nib2;
+    ip_nib2 << static_cast<int>(pkt[dst_network_address_offset + 1]); 
+    std::stringstream ip_nib3;
+    ip_nib3 << static_cast<int>(pkt[dst_network_address_offset + 2]); 
+    std::stringstream ip_nib4;
+    ip_nib4 << static_cast<int>(pkt[dst_network_address_offset + 3]); 
+    dst_ipv4_address = ip_nib1.str() + "." + ip_nib2.str() + "." + ip_nib3.str() + "." + ip_nib4.str(); 
+}
+
+void ethr_pkt::parse_l2_ethertype(unsigned char* pkt)
+{
+    l2_ethertype = 0;
+    l2_ethertype = (pkt[l2_ethertype_offset] << 8); 
+    l2_ethertype = (pkt[l2_ethertype_offset + 1] | l2_ethertype); 
+}
+
+void ethr_pkt::parse_ip_version_type(unsigned char* pkt)
+{
+    ip_version_type = (pkt[ip_header_offset] >> 4);
+}
+
+void ethr_pkt::parse_ip_header_length(unsigned char* pkt)
+{
+    ip_header_length = (pkt[ip_header_offset] & 0x0F);
+}
+
+void ethr_pkt::parse_dscp_priority(unsigned char* pkt)
+{
+    dscp_priority = pkt[ip_dscp_offset];
+}
+
+void ethr_pkt::parse_ip_total_length(unsigned char* pkt)
+{
+    ip_total_length = 0;
+    ip_total_length = (pkt[ip_total_length_offset] << 8); 
+    ip_total_length = (pkt[ip_total_length_offset + 1] | ip_total_length); 
+}
+
+void ethr_pkt::parse_packet_identifier(unsigned char* pkt)
+{
+    packet_identifier = 0;
+    packet_identifier = (pkt[ip_identifier_offset] << 8); 
+    packet_identifier = (pkt[ip_identifier_offset + 1] | packet_identifier); 
+}
+
+void ethr_pkt::parse_fragment_flags(unsigned char* pkt)
+{
+    dont_frag_flag = ((pkt[ip_fragment_offset] & 0x40) >> 6);  
+    more_frag_flag = ((pkt[ip_fragment_offset] & 0x20) >> 5); 
+    frag_offset_identifier = 0;
+    frag_offset_identifier = ((pkt[ip_fragment_offset] & 0x1F) << 8); 
+    frag_offset_identifier = (pkt[ip_fragment_offset + 1] | frag_offset_identifier); 
+}
+
+void ethr_pkt::parse_ttl(unsigned char* pkt)
+{
+    ttl = pkt[ip_ttl_offset];
+}
+
+void ethr_pkt::parse_protocol(unsigned char* pkt)
+{
+    l3_protocol_type = pkt[ip_protocol_offset];
+}
+
+void ethr_pkt::parse_ip_header_checksum(unsigned char* pkt)
+{
+    ip_header_checksum = 0;
+    ip_header_checksum = (pkt[ip_header_checksum_offset] << 8);
+    ip_header_checksum = (pkt[ip_header_checksum_offset + 1] | ip_header_checksum);
+}
+
 static int get_offset(ns_ns::packet_param_type param)
 {
     if (DST_MAC_ADDRESS == param)
@@ -254,14 +377,32 @@ void ethr_pkt::construct_pkt(unsigned char* packet, std::string src_mac_addr, st
     set_dst_mac_address(packet, dst_mac_addr);     
     set_dst_ipv4_address(packet, dst_ip_addr);     
     set_src_ipv4_address(packet, src_ip_addr);     
-    set_l2_ethertype(packet, 2048);    
+    set_l2_ethertype(packet, RAW_ETHR_L2_ETHERTYPE);    
     set_ip_version_type(packet, 4); 
-    set_ip_header_length(packet, 20); 
+    set_ip_header_length(packet, DEFAULT_IPV4_HEADER_SIZE); 
     set_dscp_priority(packet, 56); 
-    set_ip_total_length(packet, 64); 
+    set_ip_total_length(packet, DEFAULT_IPV4_PACKET_SIZE); 
     set_packet_identifier(packet, 1); 
     set_fragment_flags(packet, 0, 0, 0); 
-    set_ttl(packet, 64); 
-    set_protocol(packet, 255); 
+    set_ttl(packet, DEFAULT_TTL_VALUE); 
+    set_protocol(packet, RAW_ETHR_L3_ETHERTYPE); 
     set_ip_header_checksum(packet, 65535);
+}  
+
+void ethr_pkt::parse_pkt(unsigned char* packet)
+{
+    parse_src_mac_address(packet);     
+    parse_dst_mac_address(packet);     
+    parse_dst_ipv4_address(packet);     
+    parse_src_ipv4_address(packet);     
+    parse_l2_ethertype(packet);    
+    parse_ip_version_type(packet); 
+    parse_ip_header_length(packet); 
+    parse_dscp_priority(packet); 
+    parse_ip_total_length(packet); 
+    parse_packet_identifier(packet); 
+    parse_fragment_flags(packet); 
+    parse_ttl(packet); 
+    parse_protocol(packet); 
+    parse_ip_header_checksum(packet);
 }  
