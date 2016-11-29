@@ -8,10 +8,10 @@
 #include <algorithm>
 #include <iterator>
  
-#ifndef __NS_NAMESPACE_H__
-#define __NS_NAMESPACE_H__
 #include "../ns_namespace.h"
-#endif // __NS_NAMESPACE_H__
+
+#ifndef __NS_SHORTEST_PATH_H__
+#define __NS_SHORTEST_PATH_H__ 
 
 class shortest_path 
 {
@@ -34,3 +34,5 @@ class shortest_path
 }; 
 
 bool compare(const std::pair<std::pair<int, int>, double> &i, const std::pair<std::pair<int, int>, double> &j);
+
+#endif // __NS_SHORTEST_PATH_H__

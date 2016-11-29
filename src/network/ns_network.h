@@ -2,30 +2,18 @@
 #include <vector>
 #include <list>
 
-#ifndef __NS_NODE_ROUTER_H__
-#define __NS_NODE_ROUTER_H__
 #include "../node/ns_node_router.h"
-#endif // __NS_NODE_ROUTER_H__ 
 
-#ifndef __NS_NODE_ROUTER_LINK_H__
-#define __NS_NODE_ROUTER_LINK_H__
 #include "../link/ns_node_router_link.h"
-#endif // __NS_NODE_ROUTER_LINK_H__ 
 
-#ifndef __NS_SHORTEST_PATH_H__
-#define __NS_SHORTEST_PATH_H__
 #include "ns_shortest_path.h"
-#endif // __NS_SHORTEST_PATH_H__ 
 
-#ifndef __NS_ROUTING_TABLE_H__
-#define __NS_ROUTING_TABLE_H__
 #include "ns_routing_table.h"
-#endif // __NS_ROUTING_TABLE_H__ 
 
-#ifndef __NS_ARP_TABLE_H__
-#define __NS_ARP_TABLE_H__
 #include "ns_arp_table.h"
-#endif // __NS_ARP_TABLE_H__ 
+
+#ifndef __NS_NETWORK_H__
+#define __NS_NETWORK_H__ 
 
 class router_network
 {
@@ -54,3 +42,5 @@ class router_network
     std::vector<router*> router_list;
     std::vector<router_link*> link_list; 
 };
+
+#endif // __NS_NETWORK_H__

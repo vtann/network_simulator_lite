@@ -1,7 +1,4 @@
-#ifndef __NS_ARP_TABLE_H__
-#define __NS_ARP_TABLE_H__
 #include "ns_arp_table.h"
-#endif // __NS_ARP_TABLE_H__ 
 
 std::list<arp_entry*> list_arp_table;
 

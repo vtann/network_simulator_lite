@@ -1,7 +1,4 @@
-#ifndef __NS_NETWORK_H__
-#define __NS_NETWORK_H__ 
 #include "ns_network.h"
-#endif // __NS_NETWORK_H__
 
 router_network::router_network()
 {
@@ -23,7 +20,7 @@ int router_network::number_of_links()
 
 router* router_network::get_router(int node_id)
 {
-    for (int index = 0; index < router_list.size(); index++)
+    for (unsigned int index = 0; index < router_list.size(); index++)
     {
         if (node_id == router_list[index]->get_node_id())
         {

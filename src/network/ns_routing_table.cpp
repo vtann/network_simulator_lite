@@ -1,7 +1,4 @@
-#ifndef __NS_ROUTING_TABLE_H__
-#define __NS_ROUTING_TABLE_H__
 #include "ns_routing_table.h"
-#endif // __NS_ROUTING_TABLE_H__ 
 
 std::list<routing_entry*> list_routing_table;
 

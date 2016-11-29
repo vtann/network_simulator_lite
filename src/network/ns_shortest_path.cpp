@@ -1,7 +1,4 @@
-#ifndef __NS_SHORTEST_PATH_H__
-#define __NS_SHORTEST_PATH_H__ 
 #include "ns_shortest_path.h"
-#endif // __NS_SHORTEST_PATH_H__
 
 using namespace ns_ns;
 
