@@ -9,7 +9,7 @@ class node
     node(int id) 
     {
         node_id = id; 
-    }
+    }  
     
     ~node() { };
  

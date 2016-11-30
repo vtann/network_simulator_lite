@@ -10,22 +10,28 @@
 class router : public node 
 {
     public:
-    router(int n=-1);
-    
-    ~router();
-    
-    void add_interface(router_interface* interface);
+        router(int nodeID,int numbInterfaces, double xAxis, double yAxis);
 
-    router_interface* get_interface(int if_id);
-    
-    router_interface* get_interface(std::string& mac);
-    
-    ns_ns::interfaces get_all_interfaces() const;
-    
-    int num_of_interfaces() const;
+        ~router();
+        
+        router(const router &r); //Copy constructor
+
+        void add_interface(router_interface* interface);
+
+        router_interface* get_interface(int if_id);
+
+        router_interface* get_interface(std::string& mac);
+
+        ns_ns::interfaces get_all_interfaces() const;
+
+        int get_num_of_interfaces() const;
+        double get_xAxis() const;
+        double get_yAxis() const;
     
     private:
-    ns_ns::interfaces interface_list;
+        int num_of_interfaces;
+        double xAxis,yAxis;
+        ns_ns::interfaces interface_list;
 };
 
 #endif // __NS_NODE_ROUTER_H__

@@ -1,9 +1,10 @@
 #include "ns_node_router.h"
 
-router::router(int n) : node(n)
+router::router(int nodeID,int numbInterfaces, double xAxis, double yAxis) : node(nodeID)
 {
-    //interface_list = NULL;
-      
+    this->num_of_interfaces=numbInterfaces;
+    this->xAxis=xAxis;
+    this->yAxis=yAxis;
 } 
 
 router::~router()
@@ -18,7 +19,7 @@ void router::add_interface(router_interface* interface)
 
 router_interface* router::get_interface(int if_id) 
 {
-    int num = num_of_interfaces();
+    int num = get_num_of_interfaces();
     int index;
 
     if ((if_id < 0) || (if_id > num))
@@ -37,7 +38,7 @@ router_interface* router::get_interface(int if_id)
 
 router_interface* router::get_interface(std::string& mac) 
 {
-    int num = num_of_interfaces();
+    int num = get_num_of_interfaces();
     int index;
     int found = 0;
 
@@ -57,9 +58,26 @@ ns_ns::interfaces router::get_all_interfaces() const
     return interface_list;
 }  
 
-int router::num_of_interfaces() const
+int router::get_num_of_interfaces() const
 {
     return interface_list.size();
+}
+
+double router::get_xAxis() const
+{
+    return this->xAxis;
+}
+
+double router::get_yAxis() const
+{
+    return this->yAxis;
+}
+
+
+router::router(const router &r):node(r.get_node_id()) {
+    this->num_of_interfaces=r.get_num_of_interfaces();
+    this->xAxis=r.get_xAxis();
+    this->yAxis=r.get_yAxis();
 }
 
 
