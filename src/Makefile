@@ -16,6 +16,7 @@ USER_NETWORK_DIR = network
 USER_BIN_DIR = bin
 USER_PACKET_DIR = packet
 USER_XML_DIR = xml
+USER_FEATURE_DIR = feature
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
@@ -64,6 +65,12 @@ ns_xml_parser.o : $(USER_XML_DIR)/ns_xml_parser.cpp $(USER_XML_DIR)/ns_xml_parse
 tinyxml2.o : $(USER_XML_DIR)/tinyxml2.cpp $(USER_XML_DIR)/tinyxml2.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_XML_DIR)/tinyxml2.cpp
 
-network_simulator : main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_xml_parser.o tinyxml2.o ns_packet_ethr.o 
+ns_packet_sender.o : $(USER_FEATURE_DIR)/ns_packet_sender.cpp $(USER_FEATURE_DIR)/ns_packet_sender.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_sender.cpp
+
+ns_packet_receiver.o : $(USER_FEATURE_DIR)/ns_packet_receiver.cpp $(USER_FEATURE_DIR)/ns_packet_receiver.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_receiver.cpp
+
+network_simulator : main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_packet_sender.o ns_packet_receiver.o ns_xml_parser.o tinyxml2.o 
 	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
 
