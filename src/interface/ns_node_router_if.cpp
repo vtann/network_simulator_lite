@@ -1,9 +1,17 @@
 #include "ns_node_router_if.h"
 
-router_interface::router_interface(int node_id, int if_id) : node_interface(if_id)
+using namespace ns_ns;
+
+router_interface::router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, int interfaceSpeed) : node_interface(interfaceID)
 {
-   router_id = node_id;    
-   is_connected_flag = false; 
+   this->router_id = nodeID;
+   set_interface_address(mac);
+   set_network_address(ip);
+   set_mask(mask);
+   set_queue_size(interfaceQueue);
+   set_interface_speed(interfaceSpeed);
+   
+   is_connected_flag = false;
 }
 
 router_interface::~router_interface()
@@ -78,5 +86,16 @@ int router_interface::get_mask() const
 void router_interface::set_interface_speed(int if_speed)
 {
     interface_speed = if_speed;
+}
+
+router_interface::router_interface(const router_interface &r_i):node_interface(r_i.get_interface_id()){
+    this->router_id=r_i.router_id;
+    this->mac_address=r_i.mac_address;
+    this->queue_size=r_i.queue_size;
+    this->interface_speed=r_i.interface_speed;
+    this->ip_address=r_i.ip_address;
+    this->mask=r_i.mask;
+    this->ethr_packets=r_i.ethr_packets;
+    this->is_connected_flag=r_i.is_connected_flag; 
 }
 

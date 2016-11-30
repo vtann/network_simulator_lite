@@ -1,9 +1,6 @@
 #include "ns_node_if.h"
 
-#ifndef __NS_PACKET_ETHR_H__
-#define __NS_PACKET_ETHR_H__
 #include "../packet/ns_packet_ethr.h"
-#endif // __NS_PACKET_ETHR_H__
 
 #include "../ns_namespace.h"
 
@@ -15,9 +12,11 @@
 class router_interface : public node_interface
 {
     public:
-    router_interface(int node_id, int if_id=-1);
+    router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, int interfaceSpeed);
     
     ~router_interface(); 
+    
+    router_interface(const router_interface &r_i);//Copy constructor
 
     int get_router_id() const;
 
