@@ -5,13 +5,15 @@
 #include <stdexcept>
 #include <string>
 
-#ifndef __NS_NAMESPACE_H__
-#define __NS_NAMESPACE_H__
 #include "../ns_namespace.h"
-#endif // __NS_NAMESPACE_H_
+
+#ifndef __NS_PACKET_SENDER_H__
+#define __NS_PACKET_SENDER_H__
 
 class packet_sender
 {
     public:
     private:
 };
+
+#endif //__NS_PACKET_SENDER_H__
