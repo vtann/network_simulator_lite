@@ -15,7 +15,7 @@ void packet_receiver::receive_packet(unsigned char *pkt)
     
     if (0 != pkt_mac_addr.compare(if_mac_addr))
     {
-        // Drop the packet and don update delay
+        // Drop the packet and don't update delay
     }
       
     std::string if_ip_addr = rec_interface->get_network_address();
@@ -23,15 +23,21 @@ void packet_receiver::receive_packet(unsigned char *pkt)
     
     if (0 == pkt_ip_addr.compare(if_ip_addr))
     {
+        // Check ttl  
         // Calculate delay
     }
     else
     {
-        /*std::list<routing_entry*> table = get_routing_table(); 
+        std::list<routing_entry*> table = get_routing_table(); 
         // Routing table
-        for (std::list<routing_entry*>::iterator index = table->begin(); index != table->end(); index++)
+        for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
         {
-        } */ 
+            if (0 == pkt_ip_addr.compare(0, ((*index)->network_mask - 1), (*index)->dst_ip_address))  
+            {
+                //put it in the respective queue 
+                 
+            }
+        } 
     }
 }
  

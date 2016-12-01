@@ -1,6 +1,7 @@
 #include <limits.h>
 #include "gtest/gtest.h"
 #include "../../../packet/ns_packet_ethr.h"
+#include "../../../network/ns_routing_table.h"
 
 TEST(test_ethr_packet, packet_creation)
 {
@@ -136,4 +137,35 @@ TEST(test_ethr_packet, hex_string_to_int_conversion)
     EXPECT_EQ(255, value);
     value = pkt.hex_string_to_int("DE");
     EXPECT_EQ(222, value);
+}
+
+TEST(test_routing_table, routing_table_creation)
+{
+    add_routing_table_entry("3.3.3.3", 24, 1, 2, "1.1.1.1");
+     
+    std::list<routing_entry*> table = get_routing_table(); 
+    for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
+    {
+        EXPECT_EQ("3.3.3.3", (*index)->dst_ip_address);
+        EXPECT_EQ(24, (*index)->network_mask);  
+        EXPECT_EQ(1, (*index)->outgoing_if_id);  
+        EXPECT_EQ(2, (*index)->gateway_if_id);  
+        EXPECT_EQ("1.1.1.1", (*index)->gateway_ip_address);  
+    }                
+} 
+
+TEST(test_packet_routing, routing_packet)
+{
+    unsigned char packet[64] = {0, 10, 255, 0, 0, 2, 1, 2, 3, 4, 5, 6, 8, 0, 69, 56, 0, 64, 0, 100, 64, 100, 253, 254, 255, 255, 1, 1, 1, 1, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    add_routing_table_entry("3.3.3.3", 24, 1, 2, "1.1.1.1");
+     
+    std::list<routing_entry*> table = get_routing_table(); 
+    for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
+    {
+        EXPECT_EQ("3.3.3.3", (*index)->dst_ip_address);
+        EXPECT_EQ(24, (*index)->network_mask);  
+        EXPECT_EQ(1, (*index)->outgoing_if_id);  
+        EXPECT_EQ(2, (*index)->gateway_if_id);  
+        EXPECT_EQ("1.1.1.1", (*index)->gateway_ip_address);  
+    }
 }

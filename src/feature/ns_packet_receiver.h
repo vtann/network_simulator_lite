@@ -11,6 +11,8 @@
 
 #include "../node/ns_node_router.h"
 
+#include "../network/ns_routing_table.h"
+
 #ifndef __NS_PACKET_RECEIVER_H__
 #define __NS_PACKET_RECEIVER_H__
 

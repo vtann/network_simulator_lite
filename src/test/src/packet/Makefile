@@ -18,6 +18,7 @@ GTEST_DIR = /home/$(USER)/googletest
 
 # Where to find user code.
 USER_DIR = ../../../packet
+USER_NETWORK_DIR = ../../../network
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
@@ -42,6 +43,9 @@ all : $(TESTS)
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
+
+run : ns_packet_ethr_unittest
+	./ns_packet_ethr_unittest
 
 # Builds gtest.a and gtest_main.a.
 
@@ -74,5 +78,8 @@ gtest_main.a : gtest-all.o gtest_main.o
 ns_packet_ethr.o : $(USER_DIR)/ns_packet_ethr.cpp $(USER_DIR)/ns_packet_ethr.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/ns_packet_ethr.cpp
 
-ns_packet_ethr_unittest : ns_packet_ethr.o ns_packet_ethr_test.o gtest_main.a
+ns_routing_table.o : $(USER_NETWORK_DIR)/ns_routing_table.cpp $(USER_NETWORK_DIR)/ns_routing_table.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_routing_table.cpp
+
+ns_packet_ethr_unittest : ns_packet_ethr.o ns_routing_table.o ns_packet_ethr_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
