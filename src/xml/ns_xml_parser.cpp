@@ -11,13 +11,12 @@ int XMLparser::load() {
     eResult = xmlDoc.LoadFile(this->filepath);
     XMLCheckResult(eResult);
     
-    std::cout<< "XML document loaded!!! "<<std::endl;
     return OK;
 }
 
 int XMLparser::process(router_network* rn) {
     
-    //node
+    // Node
     XMLHandle docHandle(xmlDoc);
     XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
     
@@ -37,16 +36,15 @@ int XMLparser::process(router_network* rn) {
         eResult = nodeElement->QueryDoubleAttribute("y", &yAxis);
         XMLCheckResult(eResult);
     
-        router* newRouter = new router(nodeID,numbInterfaces,xAxis,yAxis);
+        router* newRouter = new router(nodeID, numbInterfaces, xAxis, yAxis);
         rn->add_router(newRouter);
-        std::cout<<"nodeID:"<<nodeID<<" "<<"numbInterfaces:"<<numbInterfaces<<" "<<"XAxis:"<<xAxis<<" "<<"yAxis"<<yAxis<<std::endl;
         
-        //interface
+        // Interface
         XMLHandle ieHandle(nodeElement);
         XMLElement* interfaceElement = ieHandle.FirstChildElement("interface").ToElement();
     
-        int interfaceID,mask,interfaceQueue,interfaceSpeed;
-        std::string mac,ip;
+        int interfaceID, mask, interfaceQueue, interfaceSpeed;
+        std::string mac, ip;
         const char* szAttributeText = 0;
 
         while (interfaceElement != 0){
@@ -72,14 +70,13 @@ int XMLparser::process(router_network* rn) {
 
             router_interface* newInterface= new router_interface(nodeID,interfaceID,mac,ip,mask,interfaceQueue,interfaceSpeed);
             newRouter->add_interface(newInterface);
-            std::cout<<"interfaceID:"<<interfaceID<<" "<<"mac:"<<mac<<" "<<"ip:"<<ip<<" "<<"mask:"<<mask<<" "<<"queue:"<<interfaceQueue<<" "<<"Speed:"<<interfaceSpeed<<std::endl;
 
             interfaceElement = interfaceElement->NextSiblingElement("interface");
         }
         nodeElement = nodeElement->NextSiblingElement("node");
     }
     
-    //link
+    // Link
     XMLElement* linkElement = docHandle.FirstChild().FirstChildElement("link").ToElement();
     int linkID,linkSpeed,sourceNodeID,sourceInterfaceID,destNodeID,destInterfaceID;
     std::string source, destination;
@@ -119,7 +116,6 @@ int XMLparser::process(router_network* rn) {
         router_link* newLink = new router_link(linkID);
         newLink->create_link(sourceNode,sourceInterface,destNode,destInterface,linkSpeed,linkWeight);
         rn->add_link(newLink);
-        std::cout<<"linkID: "<<linkID<<" "<<"source:"<<sourceNodeID<<","<<sourceInterfaceID<<" "<<"destination:"<<destNodeID<<","<<destInterfaceID<<"speed:"<<linkSpeed<<" "<<"weight:"<<linkWeight<<std::endl;
         
         linkElement = linkElement->NextSiblingElement("link");
     }
@@ -136,11 +132,9 @@ std::vector<std::string> XMLparser::get_nodeAndinterfaceID(std::string param){
 
     pos = param.find(delimiter);
     nodeID = param.substr(0, pos);
-    std::cout << nodeID << std::endl;
     sub_strings.push_back(nodeID);
     param.erase(0, pos + delimiter.length());
     interfaceID=param;
-    std::cout << interfaceID << std::endl;
     sub_strings.push_back(interfaceID);
     return sub_strings;
 }

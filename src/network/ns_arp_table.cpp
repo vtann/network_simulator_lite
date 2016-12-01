@@ -1,8 +1,6 @@
 #include "ns_arp_table.h"
 
-std::list<arp_entry*> list_arp_table;
-
-void add_arp_table_entry(std::string gw_nw_addr, std::string gw_mac_addr)
+void arp_table::add_arp_table_entry(std::string gw_nw_addr, std::string gw_mac_addr)
 {
     arp_entry *element = new arp_entry; 
     
@@ -11,12 +9,12 @@ void add_arp_table_entry(std::string gw_nw_addr, std::string gw_mac_addr)
     list_arp_table.push_back(element);
 }
     
-std::list<arp_entry*> get_arp_table()
+std::list<arp_entry*> arp_table::get_arp_table()
 {
     return list_arp_table;
 } 
 
-int get_num_of_arp_table_entries()
+int arp_table::get_num_of_arp_table_entries()
 {
    return list_arp_table.size();
 }

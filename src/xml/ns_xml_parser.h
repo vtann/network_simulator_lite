@@ -18,9 +18,11 @@ using namespace ns_ns;
 class XMLparser{
 public:
     XMLparser(const char* filepath);
+    
     ~XMLparser();
     
     int load();
+
     int process(router_network* rn);
     
     std::vector<std::string> get_nodeAndinterfaceID(std::string param);

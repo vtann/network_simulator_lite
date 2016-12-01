@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include <vector>
+
 #include <list>
 
 #include "../node/ns_node_router.h"

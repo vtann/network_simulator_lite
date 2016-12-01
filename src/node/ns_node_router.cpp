@@ -5,6 +5,10 @@ router::router(int nodeID,int numbInterfaces, double xAxis, double yAxis) : node
     this->num_of_interfaces=numbInterfaces;
     this->xAxis=xAxis;
     this->yAxis=yAxis;
+
+    // Allocate memory for routing table class
+    r_table = new routing_table;
+    a_table = new arp_table;
 } 
 
 router::~router()
@@ -80,4 +84,12 @@ router::router(const router &r):node(r.get_node_id()) {
     this->yAxis=r.get_yAxis();
 }
 
+routing_table* router::get_routing_table()
+{
+    return r_table;
+}
 
+arp_table* router::get_arp_table()
+{
+    return a_table;
+}

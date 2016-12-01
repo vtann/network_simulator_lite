@@ -4,6 +4,10 @@
 
 #include "../interface/ns_node_router_if.h"
 
+#include "../network/ns_routing_table.h"
+
+#include "../network/ns_arp_table.h"
+
 #ifndef __NS_NODE_ROUTER_H__
 #define __NS_NODE_ROUTER_H__
 
@@ -25,13 +29,21 @@ class router : public node
         ns_ns::interfaces get_all_interfaces() const;
 
         int get_num_of_interfaces() const;
+
         double get_xAxis() const;
+
         double get_yAxis() const;
     
+        routing_table* get_routing_table();
+
+        arp_table* get_arp_table();
+
     private:
         int num_of_interfaces;
         double xAxis,yAxis;
         ns_ns::interfaces interface_list;
+        routing_table *r_table;
+        arp_table *a_table;
 };
 
 #endif // __NS_NODE_ROUTER_H__

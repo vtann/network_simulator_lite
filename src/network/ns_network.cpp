@@ -78,8 +78,12 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
         cost = (*index)->get_link_cost();
         adjacency_list.add_edge(graph, src_router->get_node_id(), dst_router->get_node_id(), cost);  
     }
+
     for (int index = 0; index < vertices; index++)
     {
+        router *r = router_list[index]; 
+        routing_table *r_t = r->get_routing_table();    
+        arp_table *a_t = r->get_arp_table();    
         adjacency_list.dijikstra_compute_paths(index, min_distance, previous); 
         for (int inner_index = 0; inner_index < vertices; inner_index++)
         {
@@ -89,14 +93,22 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
                 //std::cout << "inner_index: " << inner_index << std::endl;  
                 adjacency_list.dijkstra_get_shortest_path_to(path, inner_index, previous);
                 int num = path.size();
-                start_edge = find_link(path[0], path[1]);
+ 
+                std::cout << "Path:";
+                for (int index1 = 0; index1 < num; index1++)
+                {
+                    std::cout << " " << path[index1]; 
+                }
+                std::cout << std::endl;
+
+                start_edge = find_link(path[num - 2], path[num - 1]);
                 if ((NULL == start_edge))
                 {
-                    start_edge = find_link(path[1], path[0]);
+                    start_edge = find_link(path[num - 1], path[num - 2]);
                     if ((NULL != start_edge))
                     {
-                        gw_if = start_edge->get_src_if();    
-                        src_if = start_edge->get_dst_if();   
+                        src_if = start_edge->get_src_if();    
+                        gw_if = start_edge->get_dst_if();   
                     } 
                     else
                     {
@@ -105,16 +117,16 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
                 }
                 else
                 {
-                    src_if = start_edge->get_src_if();    
-                    gw_if = start_edge->get_dst_if();   
+                    gw_if = start_edge->get_src_if();    
+                    src_if = start_edge->get_dst_if();   
                 } 
-                end_edge = find_link(path[num - 2], path[num - 1]);
+                end_edge = find_link(path[0], path[1]);
                 if ((NULL == end_edge))
                 {
-                    end_edge = find_link(path[num - 1], path[num - 2]);
+                    end_edge = find_link(path[1], path[0]);
                     if ((NULL != end_edge))
                     {
-                        dst_if = end_edge->get_src_if();   
+                        dst_if = end_edge->get_dst_if();   
                     } 
                     else
                     {
@@ -123,12 +135,14 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
                 }
                 else
                 {
-                    dst_if = end_edge->get_dst_if();   
+                    dst_if = end_edge->get_src_if();   
                 } 
-                add_routing_table_entry(dst_if->get_network_address(), dst_if->get_mask(), src_if->get_interface_id(), gw_if->get_interface_id(), dst_if->get_network_address());
-                add_arp_table_entry(gw_if->get_network_address(), gw_if->get_interface_address());  
+                r_t->add_routing_table_entry(dst_if->get_network_address(), dst_if->get_mask(), src_if->get_interface_id(), gw_if->get_interface_id(), gw_if->get_network_address());
+                a_t->add_arp_table_entry(gw_if->get_network_address(), gw_if->get_interface_address());  
             }
+            path.clear();
         }
+        path.clear();
     }
 }
 
