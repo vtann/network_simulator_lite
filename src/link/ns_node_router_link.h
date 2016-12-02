@@ -37,7 +37,7 @@ class router_link : public node_link
 
     router_interface* get_dst_if();
 
-    int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if,int link_speed,double link_weight);
+    int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if,double link_speed,double link_weight);
 
     private:
     int link_id;
@@ -45,7 +45,7 @@ class router_link : public node_link
     router* dst_router;
     router_interface* src_interface;
     router_interface* dst_interface; 
-    int link_speed;
+    double link_speed;
     double link_cost;
 };
 

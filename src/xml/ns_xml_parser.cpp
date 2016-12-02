@@ -43,7 +43,8 @@ int XMLparser::process(router_network* rn) {
         XMLHandle ieHandle(nodeElement);
         XMLElement* interfaceElement = ieHandle.FirstChildElement("interface").ToElement();
     
-        int interfaceID, mask, interfaceQueue, interfaceSpeed;
+        int interfaceID, mask, interfaceQueue;
+        double interfaceSpeed;
         std::string mac, ip;
         const char* szAttributeText = 0;
 
@@ -65,7 +66,7 @@ int XMLparser::process(router_network* rn) {
             eResult = interfaceElement->QueryIntAttribute("queue", &interfaceQueue);
             XMLCheckResult(eResult);
 
-            eResult = interfaceElement->QueryIntAttribute("speed", &interfaceSpeed);
+            eResult = interfaceElement->QueryDoubleAttribute("speed", &interfaceSpeed);
             XMLCheckResult(eResult);
 
             router_interface* newInterface= new router_interface(nodeID,interfaceID,mac,ip,mask,interfaceQueue,interfaceSpeed);
@@ -78,9 +79,9 @@ int XMLparser::process(router_network* rn) {
     
     // Link
     XMLElement* linkElement = docHandle.FirstChild().FirstChildElement("link").ToElement();
-    int linkID,linkSpeed,sourceNodeID,sourceInterfaceID,destNodeID,destInterfaceID;
+    int linkID,sourceNodeID,sourceInterfaceID,destNodeID,destInterfaceID;
     std::string source, destination;
-    double linkWeight;
+    double linkWeight,linkSpeed;
     std::string source_nodeID, source_interfaceID, dest_nodeID, dest_interfaceID;
     std::vector<std::string> source_params,dest_params;
     const char* szAttributeText = 0;
@@ -107,7 +108,7 @@ int XMLparser::process(router_network* rn) {
         router* destNode(rn->get_router(destNodeID));
         router_interface* destInterface(destNode->get_interface(destInterfaceID));
 
-        eResult = linkElement->QueryIntAttribute("speed", &linkSpeed);
+        eResult = linkElement->QueryDoubleAttribute("speed", &linkSpeed);
         XMLCheckResult(eResult);
 
         eResult = linkElement->QueryDoubleAttribute("weight", &linkWeight);

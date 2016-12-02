@@ -2,7 +2,7 @@
 
 using namespace ns_ns;
 
-router_interface::router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, int interfaceSpeed) : node_interface(interfaceID)
+router_interface::router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed) : node_interface(interfaceID)
 {
    this->router_id = nodeID;
    set_interface_address(mac);

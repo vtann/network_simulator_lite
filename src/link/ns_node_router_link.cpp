@@ -61,7 +61,7 @@ router_interface* router_link::get_dst_if()
     return dst_interface;
 }
 
-int router_link::create_link(router* src, router_interface* src_if, router* dst, router_interface* dst_if,int link_speed,double link_weight)
+int router_link::create_link(router* src, router_interface* src_if, router* dst, router_interface* dst_if,double link_speed,double link_weight)
 {
     if ((dst_if->get_router_id() == src_if->get_router_id()) && (dst->get_node_id() == src->get_node_id()))
     {

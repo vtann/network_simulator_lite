@@ -12,7 +12,7 @@
 class router_interface : public node_interface
 {
     public:
-    router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, int interfaceSpeed);
+    router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
     
     ~router_interface(); 
     
@@ -50,7 +50,7 @@ class router_interface : public node_interface
     int router_id;
     std::string mac_address;
     int queue_size;
-    int interface_speed;
+    double interface_speed;
     std::string ip_address;
     int mask;
     ns_ns::packets ethr_packets;
