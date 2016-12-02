@@ -4,15 +4,17 @@
 
 TEST(test_router_link, router_link_creation)
 {
-    router router_1(1);
-    router router_2(2);
+    //router(int nodeID,int numbInterfaces, double xAxis, double yAxis);
+    router router_1(1,1,1.1,1.1);
+    router router_2(2,2,2.2,2.2);
 
     EXPECT_EQ(1, router_1.get_node_id()); 
     EXPECT_EQ(2, router_2.get_node_id()); 
 
-    router_interface router_if_1(1, 1);
-    router_interface router_if_2(1, 2);
-    router_interface router_if_3(2, 1);
+    //router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
+    router_interface router_if_1(1, 1,"00:00:00:00:00:01","192.169.0.0",24,10,100.1);
+    router_interface router_if_2(1, 2,"00:00:00:00:00:02","192.169.1.0",24,10,100.1);
+    router_interface router_if_3(2, 1,"00:00:00:00:00:03","192.169.3.0",24,10,100.1);
 
     EXPECT_EQ(1, router_if_1.get_interface_id()); 
     EXPECT_EQ(2, router_if_2.get_interface_id());
@@ -42,7 +44,7 @@ TEST(test_router_link, router_link_creation)
     EXPECT_EQ(1, router_if_temp->get_interface_id());
 
     router_link router_link_1(1);
-    router_link router_link_2;
+    router_link router_link_2(2);
 
     EXPECT_EQ(1, router_link_1.get_link_cost());
     EXPECT_EQ(1, router_link_2.get_link_cost());
@@ -51,15 +53,11 @@ TEST(test_router_link, router_link_creation)
     EXPECT_EQ(false, router_if_2.get_is_connected_flag());
     EXPECT_EQ(false, router_if_3.get_is_connected_flag());
     
-    EXPECT_EQ(0, router_link_1.create_link(&router_1, &router_if_1, &router_2, &router_if_3));    
-    EXPECT_EQ(1, router_link_1.create_link(&router_1, &router_if_3, &router_2, &router_if_3));    
+    //int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if,double link_speed,double link_weight);
+    EXPECT_EQ(0, router_link_1.create_link(&router_1, &router_if_1, &router_2, &router_if_3,100.2,10.2));    
+    EXPECT_EQ(1, router_link_1.create_link(&router_1, &router_if_3, &router_2, &router_if_3,100.2,10.2));    
     
     EXPECT_EQ(true, router_if_1.get_is_connected_flag());
     EXPECT_EQ(true, router_if_3.get_is_connected_flag());
     
 }
-
-
-
-
-
