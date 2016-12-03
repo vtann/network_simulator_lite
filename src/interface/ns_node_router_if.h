@@ -6,13 +6,15 @@
 
 #include <vector>
 
+#include <algorithm>
+
 #ifndef __NS_NODE_ROUTER_IF_H__
 #define __NS_NODE_ROUTER_IF_H__
 
 class router_interface : public node_interface
 {
     public:
-    router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
+    router_interface(int nodeID, int interfaceID, std::string mac, std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
     
     ~router_interface(); 
     
@@ -55,6 +57,8 @@ class router_interface : public node_interface
     int mask;
     ns_ns::packets ethr_packets;
     bool is_connected_flag;
+    unsigned char **if_send_buf;
+    unsigned char **if_recv_buf;
 }; 
 
 #endif // __NS_NODE_ROUTER_IF_H__ 

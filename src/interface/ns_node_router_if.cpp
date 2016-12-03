@@ -2,16 +2,31 @@
 
 using namespace ns_ns;
 
-router_interface::router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed) : node_interface(interfaceID)
+router_interface::router_interface(int nodeID, int interfaceID, std::string mac, std::string ip, int mask, int interfaceQueue, double interfaceSpeed) : node_interface(interfaceID)
 {
-   this->router_id = nodeID;
-   set_interface_address(mac);
-   set_network_address(ip);
-   set_mask(mask);
-   set_queue_size(interfaceQueue);
-   set_interface_speed(interfaceSpeed);
-   
-   is_connected_flag = false;
+    router_id = nodeID;
+    set_interface_address(mac);
+    set_network_address(ip);
+    set_mask(mask);
+    set_queue_size(interfaceQueue);
+    set_interface_speed(interfaceSpeed);
+    is_connected_flag = false;
+
+    int index;
+
+    if_recv_buf = new unsigned char *[interfaceQueue];
+
+    for (index = 0; index < interfaceQueue; index++)
+    {
+        if_recv_buf[index] = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
+    }
+    
+    if_send_buf = new unsigned char *[interfaceQueue];
+
+    for (index = 0; index < interfaceQueue; index++)
+    {
+        if_send_buf[index] = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
+    }
 }
 
 router_interface::~router_interface()
@@ -88,7 +103,8 @@ void router_interface::set_interface_speed(int if_speed)
     interface_speed = if_speed;
 }
 
-router_interface::router_interface(const router_interface &r_i):node_interface(r_i.get_interface_id()){
+router_interface::router_interface(const router_interface &r_i):node_interface(r_i.get_interface_id())
+{
     this->router_id=r_i.router_id;
     this->mac_address=r_i.mac_address;
     this->queue_size=r_i.queue_size;
