@@ -14,8 +14,8 @@ USER_IF_DIR = interface
 USER_LINK_DIR = link
 USER_NETWORK_DIR = network
 USER_BIN_DIR = bin
-USER_PACKET_DIR = packet
 USER_XML_DIR = xml
+USER_PACKET_DIR = packet
 USER_FEATURE_DIR = feature
 
 # Flags passed to the C++ compiler.
@@ -23,54 +23,57 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = network_simulator
+TESTS = $(USER_BIN_DIR)/network_simulator
 
 # House-keeping build targets.
 
 all : $(TESTS)
 
 clean :
-	rm -f $(TESTS) *.o
+	rm -f $(TESTS) $(USER_BIN_DIR)/*.o
 
-main.o : main.cpp 
-	$(CXX) $(CXXFLAGS) -c main.cpp
+run : network_simulator
+	./$(USER_BIN_DIR)/network_simulator
 
-ns_node_router.o : $(USER_NODE_DIR)/ns_node_router.cpp $(USER_NODE_DIR)/ns_node_router.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_NODE_DIR)/ns_node_router.cpp
+$(USER_BIN_DIR)/main.o : main.cpp 
+	$(CXX) $(CXXFLAGS) -c main.cpp -o $(USER_BIN_DIR)/main.o
 
-ns_node_router_if.o : $(USER_IF_DIR)/ns_node_router_if.cpp $(USER_IF_DIR)/ns_node_router_if.h
-	$(CXX) $(CXXFLAGS) -c $(USER_IF_DIR)/ns_node_router_if.cpp
+$(USER_BIN_DIR)/ns_node_router.o : $(USER_NODE_DIR)/ns_node_router.cpp $(USER_NODE_DIR)/ns_node_router.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NODE_DIR)/ns_node_router.cpp -o $(USER_BIN_DIR)/ns_node_router.o 
 
-ns_node_router_link.o : $(USER_LINK_DIR)/ns_node_router_link.cpp $(USER_LINK_DIR)/ns_node_router_link.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_LINK_DIR)/ns_node_router_link.cpp
+$(USER_BIN_DIR)/ns_node_router_if.o : $(USER_IF_DIR)/ns_node_router_if.cpp $(USER_IF_DIR)/ns_node_router_if.h
+	$(CXX) $(CXXFLAGS) -c $(USER_IF_DIR)/ns_node_router_if.cpp -o $(USER_BIN_DIR)/ns_node_router_if.o
 
-ns_arp_table.o : $(USER_NETWORK_DIR)/ns_arp_table.cpp $(USER_NETWORK_DIR)/ns_arp_table.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_arp_table.cpp
+$(USER_BIN_DIR)/ns_node_router_link.o : $(USER_LINK_DIR)/ns_node_router_link.cpp $(USER_LINK_DIR)/ns_node_router_link.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_LINK_DIR)/ns_node_router_link.cpp -o $(USER_BIN_DIR)/ns_node_router_link.o
 
-ns_routing_table.o : $(USER_NETWORK_DIR)/ns_routing_table.cpp $(USER_NETWORK_DIR)/ns_routing_table.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_routing_table.cpp
+$(USER_BIN_DIR)/ns_arp_table.o : $(USER_NETWORK_DIR)/ns_arp_table.cpp $(USER_NETWORK_DIR)/ns_arp_table.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_arp_table.cpp -o $(USER_BIN_DIR)/ns_arp_table.o
 
-ns_shortest_path.o : $(USER_NETWORK_DIR)/ns_shortest_path.cpp $(USER_NETWORK_DIR)/ns_shortest_path.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_shortest_path.cpp
+$(USER_BIN_DIR)/ns_routing_table.o : $(USER_NETWORK_DIR)/ns_routing_table.cpp $(USER_NETWORK_DIR)/ns_routing_table.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_routing_table.cpp -o $(USER_BIN_DIR)/ns_routing_table.o
 
-ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_network.cpp
+$(USER_BIN_DIR)/ns_shortest_path.o : $(USER_NETWORK_DIR)/ns_shortest_path.cpp $(USER_NETWORK_DIR)/ns_shortest_path.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_shortest_path.cpp -o $(USER_BIN_DIR)/ns_shortest_path.o
 
-ns_packet_ethr.o : $(USER_PACKET_DIR)/ns_packet_ethr.cpp $(USER_PACKET_DIR)/ns_packet_ethr.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_PACKET_DIR)/ns_packet_ethr.cpp
+$(USER_BIN_DIR)/ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_network.cpp -o $(USER_BIN_DIR)/ns_network.o 
 
-ns_xml_parser.o : $(USER_XML_DIR)/ns_xml_parser.cpp $(USER_XML_DIR)/ns_xml_parser.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_XML_DIR)/ns_xml_parser.cpp
+$(USER_BIN_DIR)/ns_packet_ethr.o : $(USER_PACKET_DIR)/ns_packet_ethr.cpp $(USER_PACKET_DIR)/ns_packet_ethr.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_PACKET_DIR)/ns_packet_ethr.cpp -o $(USER_BIN_DIR)/ns_packet_ethr.o
 
-tinyxml2.o : $(USER_XML_DIR)/tinyxml2.cpp $(USER_XML_DIR)/tinyxml2.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_XML_DIR)/tinyxml2.cpp
+$(USER_BIN_DIR)/ns_xml_parser.o : $(USER_XML_DIR)/ns_xml_parser.cpp $(USER_XML_DIR)/ns_xml_parser.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_XML_DIR)/ns_xml_parser.cpp -o $(USER_BIN_DIR)/ns_xml_parser.o
 
-ns_packet_sender.o : $(USER_FEATURE_DIR)/ns_packet_sender.cpp $(USER_FEATURE_DIR)/ns_packet_sender.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_sender.cpp
+$(USER_BIN_DIR)/tinyxml2.o : $(USER_XML_DIR)/tinyxml2.cpp $(USER_XML_DIR)/tinyxml2.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_XML_DIR)/tinyxml2.cpp -o $(USER_BIN_DIR)/tinyxml2.o
 
-ns_packet_receiver.o : $(USER_FEATURE_DIR)/ns_packet_receiver.cpp $(USER_FEATURE_DIR)/ns_packet_receiver.h 
-	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_receiver.cpp
+$(USER_BIN_DIR)/ns_packet_sender.o : $(USER_FEATURE_DIR)/ns_packet_sender.cpp $(USER_FEATURE_DIR)/ns_packet_sender.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_sender.cpp -o $(USER_BIN_DIR)/ns_packet_sender.o
 
-network_simulator : main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_packet_sender.o ns_packet_receiver.o ns_xml_parser.o tinyxml2.o 
+$(USER_BIN_DIR)/ns_packet_receiver.o : $(USER_FEATURE_DIR)/ns_packet_receiver.cpp $(USER_FEATURE_DIR)/ns_packet_receiver.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_receiver.cpp -o $(USER_BIN_DIR)/ns_packet_receiver.o
+
+$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ) 
 	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
 
