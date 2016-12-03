@@ -30,7 +30,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = ns_packet_ethr_unittest
+TESTS = ns_packet_ethr_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -44,8 +44,8 @@ all : $(TESTS)
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
 
-run : ns_packet_ethr_unittest
-	./ns_packet_ethr_unittest
+run : ns_packet_ethr_test
+	./ns_packet_ethr_test
 
 # Builds gtest.a and gtest_main.a.
 
@@ -81,5 +81,5 @@ ns_packet_ethr.o : $(USER_DIR)/ns_packet_ethr.cpp $(USER_DIR)/ns_packet_ethr.h $
 ns_routing_table.o : $(USER_NETWORK_DIR)/ns_routing_table.cpp $(USER_NETWORK_DIR)/ns_routing_table.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_routing_table.cpp
 
-ns_packet_ethr_unittest : ns_packet_ethr.o ns_routing_table.o ns_packet_ethr_test.o gtest_main.a
+ns_packet_ethr_test : ns_packet_ethr.o ns_routing_table.o ns_packet_ethr_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

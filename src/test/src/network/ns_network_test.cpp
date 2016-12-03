@@ -8,29 +8,29 @@ using namespace ns_ns;
 
 TEST(test_network, network_creation)
 {
-    //router(int nodeID,int numbInterfaces, double xAxis, double yAxis);
-    router router_1(0,1,1.1,1.1);
-    router router_2(1,2,2.2,2.2);
-    router router_3(2,3,3.3,3.3);
+    // router(int nodeID, int numbInterfaces, double xAxis, double yAxis);
+    router router_1(0, 2, 1.1, 1.1);
+    router router_2(1, 2, 2.2, 2.2);
+    router router_3(2, 2, 3.3, 3.3);
 
     EXPECT_EQ(0, router_1.get_node_id()); 
     EXPECT_EQ(1, router_2.get_node_id()); 
     EXPECT_EQ(2, router_3.get_node_id());
 
-    //router_interface(int nodeID,int interfaceID,std::string mac,std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
-    router_interface router_if_1_1(0, 1, "00:00:00:00:00:01", "192.169.0.0", 24, 10, 100.1);
-    router_interface router_if_1_2(0, 2, "00:00:00:00:00:02", "192.169.0.0", 24, 10, 100.1);
-    router_interface router_if_2_1(1, 1, "00:00:00:00:00:03", "192.169.0.0", 24, 10, 100.1);
-    router_interface router_if_2_2(1, 2, "00:00:00:00:00:04", "192.169.0.0", 24, 10, 100.1);
-    router_interface router_if_3_1(2, 1, "00:00:00:00:00:05", "192.169.0.0", 24, 10, 100.1);
-    router_interface router_if_3_2(2, 2, "00:00:00:00:00:06", "192.169.0.0", 24, 10, 100.1);
+    // router_interface(int nodeID, int interfaceID, std::string mac, std::string ip, int mask, int interfaceQueue, double interfaceSpeed);
+    router_interface router_if_1_1(0, 0, "00:00:00:00:00:01", "192.169.0.0", 24, 10, 100.1);
+    router_interface router_if_1_2(0, 1, "00:00:00:00:00:02", "192.169.0.0", 24, 10, 100.1);
+    router_interface router_if_2_1(1, 0, "00:00:00:00:00:03", "192.169.0.0", 24, 10, 100.1);
+    router_interface router_if_2_2(1, 1, "00:00:00:00:00:04", "192.169.0.0", 24, 10, 100.1);
+    router_interface router_if_3_1(2, 0, "00:00:00:00:00:05", "192.169.0.0", 24, 10, 100.1);
+    router_interface router_if_3_2(2, 1, "00:00:00:00:00:06", "192.169.0.0", 24, 10, 100.1);
 
-    EXPECT_EQ(1, router_if_1_1.get_interface_id()); 
-    EXPECT_EQ(2, router_if_1_2.get_interface_id());
-    EXPECT_EQ(1, router_if_2_1.get_interface_id()); 
-    EXPECT_EQ(2, router_if_2_2.get_interface_id());
-    EXPECT_EQ(1, router_if_3_1.get_interface_id()); 
-    EXPECT_EQ(2, router_if_3_2.get_interface_id());
+    EXPECT_EQ(0, router_if_1_1.get_interface_id()); 
+    EXPECT_EQ(1, router_if_1_2.get_interface_id());
+    EXPECT_EQ(0, router_if_2_1.get_interface_id()); 
+    EXPECT_EQ(1, router_if_2_2.get_interface_id());
+    EXPECT_EQ(0, router_if_3_1.get_interface_id()); 
+    EXPECT_EQ(1, router_if_3_2.get_interface_id());
 
     std::string mac_address[] = {"00:00:00:00:00:01", "00:00:00:00:00:02", "00:00:00:00:00:03",
                                  "00:00:00:00:00:04", "00:00:00:00:00:05", "00:00:00:00:00:06"};
@@ -51,26 +51,26 @@ TEST(test_network, network_creation)
 
     router_1.add_interface(&router_if_1_1); 
     router_1.add_interface(&router_if_1_2);
-    router_1.add_interface(&router_if_2_1); 
-    router_1.add_interface(&router_if_2_2);
-    router_1.add_interface(&router_if_3_1); 
-    router_1.add_interface(&router_if_3_2);
+    router_2.add_interface(&router_if_2_1); 
+    router_2.add_interface(&router_if_2_2);
+    router_3.add_interface(&router_if_3_1); 
+    router_3.add_interface(&router_if_3_2);
      
-    router_link router_link_1(1);
-    router_link router_link_2(2);
-    router_link router_link_3(3);
+    router_link router_link_1(0);
+    router_link router_link_2(1);
+    router_link router_link_3(2);
 
-    EXPECT_EQ(1, router_link_1.get_link_cost());
-    EXPECT_EQ(1, router_link_2.get_link_cost());
-    EXPECT_EQ(1, router_link_3.get_link_cost());
-    
-    //int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if,double link_speed,double link_weight);
+    // create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if, double link_speed, double link_weight);
     EXPECT_EQ(0, router_link_1.create_link(&router_1, &router_if_1_1, &router_2, &router_if_2_1, 100.2, 10.2));    
     EXPECT_EQ(1, router_link_1.create_link(&router_1, &router_if_1_2, &router_1, &router_if_1_2, 100.2, 10.2));    
     EXPECT_EQ(1, router_link_1.create_link(&router_1, &router_if_1_1, &router_2, &router_if_2_1, 100.2, 10.2));   
     EXPECT_EQ(0, router_link_2.create_link(&router_2, &router_if_2_2, &router_3, &router_if_3_1, 100.2,10.2));    
     EXPECT_EQ(0, router_link_3.create_link(&router_3, &router_if_3_2, &router_1, &router_if_1_2, 100.2,10.2));   
 
+    EXPECT_EQ(10.2, router_link_1.get_link_cost());
+    EXPECT_EQ(10.2, router_link_2.get_link_cost());
+    EXPECT_EQ(10.2, router_link_3.get_link_cost());
+    
     router_network network;
 
     network.add_router(&router_1);
@@ -96,14 +96,17 @@ TEST(test_network, network_creation)
     
     router_link* temp = network.find_link(router_1.get_node_id(), router_2.get_node_id());
     EXPECT_EQ("00:00:00:00:00:01", temp->get_src_if()->get_interface_address()); 
-    network.calculate_shortest_path(UNDIRECTED_GRAPH); 
-    EXPECT_EQ(6, get_num_of_routing_table_entries()); 
+    network.calculate_shortest_path(UNDIRECTED_GRAPH);
+    r_temp = network.get_router(0);
+    EXPECT_EQ(2, r_temp->get_routing_table()->get_num_of_routing_table_entries()); 
+    r_temp = network.get_router(1);
+    EXPECT_EQ(2, r_temp->get_routing_table()->get_num_of_routing_table_entries()); 
+    r_temp = network.get_router(2);
+    EXPECT_EQ(2, r_temp->get_routing_table()->get_num_of_routing_table_entries()); 
 }
 
 TEST(test_network, shortest_path_creation)
 {
-
-    // remember to insert edges both ways for an undirected graph
     shortest_path adjacency_list(6);
     // 0 = a
     adjacency_list.add_edge(DIRECTED_GRAPH, 0, 5, 14);
@@ -145,7 +148,6 @@ TEST(test_network, shortest_path_creation)
 
 TEST(test_network, shortest_path_creation_2)
 {
-    // remember to insert edges both ways for an undirected graph
     shortest_path adjacency_list(3);
     
     // 0 = a
@@ -193,7 +195,6 @@ TEST(test_network, shortest_path_creation_2)
 
 TEST(test_network, shortest_path_creation_3)
 {
-    // remember to insert edges both ways for an undirected graph
     shortest_path adjacency_list(7);
     
     // 0 = a

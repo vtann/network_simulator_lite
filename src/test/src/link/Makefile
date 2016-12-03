@@ -31,7 +31,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = ns_node_router_link_unittest
+TESTS = ns_node_router_link_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -44,6 +44,9 @@ all : $(TESTS)
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
+
+run : ns_node_router_link_test
+	./ns_node_router_link_test
 
 # Builds gtest.a and gtest_main.a.
 
@@ -82,9 +85,9 @@ ns_node_router_if.o : $(USER_IF_DIR)/ns_node_router_if.cpp $(USER_IF_DIR)/ns_nod
 ns_node_router_link.o : $(USER_LINK_DIR)/ns_node_router_link.cpp $(USER_LINK_DIR)/ns_node_router_link.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_LINK_DIR)/ns_node_router_link.cpp
 
-ns_node_router_link_unittest.o : ns_node_router_link_test.cpp \
+ns_node_router_link_test.o : ns_node_router_link_test.cpp \
                      $(USER_DIR)/ns_node_router.h $(USER_IF_DIR)/ns_node_router_if.h $(USER_LINK_DIR)/ns_node_router_link.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ns_node_router_link_test.cpp 
 
-ns_node_router_link_unittest : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_node_router_link_test.o gtest_main.a
+ns_node_router_link_test : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_node_router_link_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

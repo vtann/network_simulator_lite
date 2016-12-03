@@ -32,7 +32,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = ns_network_unittest
+TESTS = ns_network_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -44,6 +44,9 @@ all : $(TESTS)
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
+
+run : ns_network_test
+	./ns_network_test
 
 # Builds gtest.a and gtest_main.a.
 
@@ -97,11 +100,11 @@ ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network
 ns_timer.o : $(USER_NETWORK_DIR)/ns_timer.cpp $(USER_NETWORK_DIR)/ns_timer.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_timer.cpp 
 
-ns_network_unittest.o : ns_network_test.cpp \
+ns_network_test.o : ns_network_test.cpp \
                      $(USER_DIR)/ns_node_router.h $(USER_IF_DIR)/ns_node_router_if.h \
                      $(USER_LINK_DIR)/ns_node_router_link.h $(USER_NETWORK_DIR)/ns_arp_table.h $(USER_NETWORK_DIR)/ns_routing_table.h \
                      $(USER_NETWORK_DIR)/ns_shortest_path.h $(USER_NETWORK_DIR)/ns_network.h $(USER_NETWORK_DIR)/ns_timer.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ns_network_test.cpp 
 
-ns_network_unittest : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_timer.o ns_network_test.o gtest_main.a
+ns_network_test : ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_timer.o ns_network_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
