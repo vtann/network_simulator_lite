@@ -9,7 +9,15 @@
 
 #include "network/ns_network.h"
 
+#include "sim/ns_network_tester.h"
+
+#include "util/ns_sim_utils.h"
+
 #include "ns_namespace.h"
+
+pthread_mutex_t send_mutex;
+
+router_network *rn;
 
 int main(int argc, char* argv[]) 
 {
@@ -26,14 +34,30 @@ int main(int argc, char* argv[])
         XMLparser x(argv[1]);
    
         // Create a network class object. It is needed to created routing table and arp table.
-        router_network rn;
+        rn = new router_network;
  
         // Load xml using the library.
         x.load();
 
         // Process the xml and create the network.
-        x.process(&rn);
-       
+        x.process(rn);
+
+        // Calculate the shortest path and configure the routing table and ARP table.        
+        rn->calculate_shortest_path(UNDIRECTED_GRAPH);
+
+        // Create test class
+        network_test *test = new network_test(rn);   
+
+        // Create mutex
+        if (OK != create_mutex(&send_mutex))
+        {
+            std::cerr << "Mutex creation failed" << std::endl; 
+            return NOT_OK;        
+        }         
+
+        // Start the threads.  
+        test->create_features();
+  
         return OK;
     }
 }

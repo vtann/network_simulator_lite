@@ -28,16 +28,16 @@ void packet_receiver::receive_packet(unsigned char *pkt)
     }
     else
     {
-        std::list<routing_entry*> table = get_routing_table(); 
+        //std::list<routing_entry*> table = get_routing_table(); 
         // Routing table
-        for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
+        /*for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
         {
             if (0 == pkt_ip_addr.compare(0, ((*index)->network_mask - 1), (*index)->dst_ip_address))  
             {
                 //put it in the respective queue 
                  
             }
-        } 
+        } */
     }
 }
  

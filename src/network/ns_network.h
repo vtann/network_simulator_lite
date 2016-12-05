@@ -32,6 +32,10 @@ class router_network
     
     int number_of_links();
    
+    std::vector<router*> get_all_routers();
+
+    std::vector<router_link*> get_all_links();
+
     router* get_router(int node_id);
     
     void calculate_shortest_path(ns_ns::graph_type graph);

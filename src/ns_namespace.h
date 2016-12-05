@@ -19,6 +19,7 @@ namespace ns_ns
     const int RAW_ETHR_L3_ETHERTYPE = 255;
     const int DEFAULT_IPV4_HEADER_SIZE = 20;
     const int DEFAULT_IPV4_PACKET_SIZE = 64;
+    const int DEFAULT_PACKET_SIZE_WITH_FCS = 68;  
     const int dst_mac_address_offset = 0;  
     const int src_mac_address_offset = 6;  
     const int l2_ethertype_offset = 12;  

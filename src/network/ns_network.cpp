@@ -18,6 +18,16 @@ int router_network::number_of_links()
     return link_list.size(); 
 }
 
+std::vector<router*> router_network::get_all_routers()
+{
+    return router_list; 
+}
+
+std::vector<router_link*> router_network::get_all_links()
+{
+    return link_list; 
+}
+
 router* router_network::get_router(int node_id)
 {
     for (unsigned int index = 0; index < router_list.size(); index++)
@@ -94,13 +104,6 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
                 adjacency_list.dijkstra_get_shortest_path_to(path, inner_index, previous);
                 int num = path.size();
  
-                std::cout << "Path:";
-                for (int index1 = 0; index1 < num; index1++)
-                {
-                    std::cout << " " << path[index1]; 
-                }
-                std::cout << std::endl;
-
                 start_edge = find_link(path[num - 2], path[num - 1]);
                 if ((NULL == start_edge))
                 {
@@ -137,7 +140,7 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
                 {
                     dst_if = end_edge->get_src_if();   
                 } 
-                r_t->add_routing_table_entry(dst_if->get_network_address(), dst_if->get_mask(), src_if->get_interface_id(), gw_if->get_interface_id(), gw_if->get_network_address());
+                r_t->add_routing_table_entry(dst_if->get_network_address(), dst_if->get_mask(), src_if->get_interface_id(), gw_if->get_router_id(), gw_if->get_interface_id(), gw_if->get_network_address());
                 a_t->add_arp_table_entry(gw_if->get_network_address(), gw_if->get_interface_address());  
             }
             path.clear();

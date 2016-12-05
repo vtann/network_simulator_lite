@@ -15,11 +15,13 @@ USER_LINK_DIR = link
 USER_NETWORK_DIR = network
 USER_BIN_DIR = bin
 USER_XML_DIR = xml
+USER_SIM_DIR = sim
+USER_UTIL_DIR = util
 USER_PACKET_DIR = packet
 USER_FEATURE_DIR = feature
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra -pthread
+CXXFLAGS += --std=c++0x -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
@@ -74,6 +76,12 @@ $(USER_BIN_DIR)/ns_packet_sender.o : $(USER_FEATURE_DIR)/ns_packet_sender.cpp $(
 $(USER_BIN_DIR)/ns_packet_receiver.o : $(USER_FEATURE_DIR)/ns_packet_receiver.cpp $(USER_FEATURE_DIR)/ns_packet_receiver.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_FEATURE_DIR)/ns_packet_receiver.cpp -o $(USER_BIN_DIR)/ns_packet_receiver.o
 
-$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ) 
+$(USER_BIN_DIR)/ns_network_tester.o : $(USER_SIM_DIR)/ns_network_tester.cpp $(USER_SIM_DIR)/ns_network_tester.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_SIM_DIR)/ns_network_tester.cpp -o $(USER_BIN_DIR)/ns_network_tester.o
+
+$(USER_BIN_DIR)/ns_sim_utils.o : $(USER_UTIL_DIR)/ns_sim_utils.cpp $(USER_UTIL_DIR)/ns_sim_utils.h
+	$(CXX) $(CXXFLAGS) -c $(USER_UTIL_DIR)/ns_sim_utils.cpp -o $(USER_BIN_DIR)/ns_sim_utils.o
+
+$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ns_network_tester.o ns_sim_utils.o) 
 	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
 

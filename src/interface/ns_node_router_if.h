@@ -1,15 +1,25 @@
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/time.h>
+
 #include "ns_node_if.h"
 
 #include "../packet/ns_packet_ethr.h"
 
 #include "../ns_namespace.h"
 
-#include <vector>
-
-#include <algorithm>
-
 #ifndef __NS_NODE_ROUTER_IF_H__
 #define __NS_NODE_ROUTER_IF_H__
+
+typedef struct packet_buf
+{
+    unsigned char *pkt_buf;
+    struct timeval *timestamp;
+}packet_buf;
 
 class router_interface : public node_interface
 {
@@ -48,6 +58,14 @@ class router_interface : public node_interface
     
     void set_network_address(std::string& ip_addr);
    
+    void copy_packet_to_send_ring_buffer(unsigned char *pkt);
+    
+    void copy_packet_to_recv_ring_buffer(unsigned char *pkt);
+
+    void remove_packet_from_send_ring_buffer(packet_buf *pkt);
+    
+    void remove_packet_from_recv_ring_buffer(packet_buf *pkt);
+
     private:
     int router_id;
     std::string mac_address;
@@ -57,8 +75,14 @@ class router_interface : public node_interface
     int mask;
     ns_ns::packets ethr_packets;
     bool is_connected_flag;
-    unsigned char **if_send_buf;
-    unsigned char **if_recv_buf;
+    packet_buf **if_send_buf;
+    packet_buf **if_recv_buf;
+    int start_recv_buf_idx;
+    int end_recv_buf_idx;
+    int start_send_buf_idx;
+    int end_send_buf_idx;
+    int pkts_in_send_buf;
+    int pkts_in_recv_buf;
 }; 
 
 #endif // __NS_NODE_ROUTER_IF_H__ 
