@@ -24,6 +24,7 @@ router_interface::router_interface(int nodeID, int interfaceID, std::string mac,
 
     for (index = 0; index < interfaceQueue; index++)
     {
+        if_recv_buf[index] = new packet_buf;
         if_recv_buf[index]->pkt_buf = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
         if_recv_buf[index]->timestamp = new struct timeval();     
     }
@@ -32,6 +33,7 @@ router_interface::router_interface(int nodeID, int interfaceID, std::string mac,
 
     for (index = 0; index < interfaceQueue; index++)
     {
+        if_send_buf[index] = new packet_buf;
         if_send_buf[index]->pkt_buf = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
         if_send_buf[index]->timestamp = new struct timeval();     
     }

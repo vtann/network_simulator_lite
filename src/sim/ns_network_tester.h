@@ -18,6 +18,10 @@ class network_test
     ~network_test();    
 
     void create_features();
+    
+    std::thread create_thread(void* rounter_index);
+
+    void* create_router_features(void* router_index);
  
     private:
     router_network *r;     
