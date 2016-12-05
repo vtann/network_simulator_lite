@@ -66,6 +66,10 @@ class router_interface : public node_interface
     
     void remove_packet_from_recv_ring_buffer(packet_buf *pkt);
 
+    int get_num_pkts_in_recv_buffer();
+
+    int get_num_pkts_in_send_buffer();
+
     private:
     int router_id;
     std::string mac_address;

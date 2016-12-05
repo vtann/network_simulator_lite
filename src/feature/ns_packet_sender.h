@@ -20,7 +20,7 @@
 #ifndef __NS_PACKET_SENDER_H__
 #define __NS_PACKET_SENDER_H__
 
-void packet_sender(router* r);
+void packet_sender(router_network *rn, router* r);
 /*class packet_sender
 {
     public:

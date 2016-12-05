@@ -24,7 +24,7 @@ router_interface::router_interface(int nodeID, int interfaceID, std::string mac,
 
     for (index = 0; index < interfaceQueue; index++)
     {
-        if_recv_buf[index] = new packet_buf;
+        if_recv_buf[index] = new packet_buf;  
         if_recv_buf[index]->pkt_buf = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
         if_recv_buf[index]->timestamp = new struct timeval();     
     }
@@ -33,7 +33,7 @@ router_interface::router_interface(int nodeID, int interfaceID, std::string mac,
 
     for (index = 0; index < interfaceQueue; index++)
     {
-        if_send_buf[index] = new packet_buf;
+        if_send_buf[index] = new packet_buf;  
         if_send_buf[index]->pkt_buf = new unsigned char [DEFAULT_PACKET_SIZE_WITH_FCS]();     
         if_send_buf[index]->timestamp = new struct timeval();     
     }
@@ -151,6 +151,7 @@ void router_interface::copy_packet_to_send_ring_buffer(unsigned char *pkt)
     else 
     {
         // Drop the packet and update link parameters
+        std::cout << "Drop the packet" << std::endl;
     }  
 }
 
@@ -174,6 +175,7 @@ void router_interface::copy_packet_to_recv_ring_buffer(unsigned char *pkt)
     else 
     {
         // Drop the packet and update link parameters
+        std::cout << "Drop the packet" << std::endl;
     }  
 }
 
@@ -221,5 +223,15 @@ void router_interface::remove_packet_from_recv_ring_buffer(packet_buf *pkt)
             start_recv_buf_idx += 1;
         } 
     } 
+}
+
+int router_interface::get_num_pkts_in_recv_buffer()
+{
+    return pkts_in_recv_buf;
+}
+
+int router_interface::get_num_pkts_in_send_buffer()
+{
+    return pkts_in_send_buf;
 }
 
