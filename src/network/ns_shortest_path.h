@@ -20,11 +20,18 @@ class shortest_path
 
     int add_edge(ns_ns::graph_type graph, int src_vertex, int dst_vertex, double cost);
 
+    bool check_remove_dup_edge(ns_ns::graph_type graph, int src_vertex, int dst_vertex, double cost);
+    
     void dijikstra_compute_paths(int source,
                                  std::vector<double> &min_distance,
                                  std::vector<int> &previous);
+    
     void dijkstra_get_shortest_path_to(std::vector<int> &path, int vertex, const std::vector<int> &previous);
+    
     void form_routing_vertices(int vertex);
+
+    void print_edges();
+    
     void sort_vertex_queue(std::vector<std::pair<std::pair<int, int>, double> > &vertex);
      
     private:

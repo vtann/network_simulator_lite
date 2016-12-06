@@ -20,6 +20,76 @@ void shortest_path::form_routing_vertices(int vertex)
     routing_vertices.push_back(vertex);
 }
 
+bool shortest_path::check_remove_dup_edge(ns_ns::graph_type graph, int src_vertex, int dst_vertex, double cost)
+{
+    bool result = true;
+    bool is_new_link_dup = false;
+    std::vector< std::pair<int, double> >::iterator index;
+    
+    for (index = adjacency_list[src_vertex].begin(); index != adjacency_list[src_vertex].end(); index++)
+    {
+        if (dst_vertex == index->first)
+        {
+            if (cost < index->second)
+            {
+                result = false; 
+                break;
+            }
+            else
+            {
+                is_new_link_dup = true;
+            }   
+        }  
+    }
+    if (false == result)
+    {
+        adjacency_list[src_vertex].erase(index);
+    }
+    
+    if (UNDIRECTED_GRAPH == graph)
+    {
+        result = true;
+        for (index = adjacency_list[dst_vertex].begin(); index != adjacency_list[dst_vertex].end(); index++)
+        {
+            if (src_vertex == index->first)
+            {
+                if (cost < index->second)
+                {
+                    result = false; 
+                    break;
+                }
+                else 
+                {
+                    is_new_link_dup = true;
+                }   
+            }  
+        }
+        if (false == result)
+        {
+            adjacency_list[dst_vertex].erase(index);
+        }
+    }
+    else
+    { 
+        return is_new_link_dup;
+    } 
+    return is_new_link_dup;
+}
+
+void shortest_path::print_edges()
+{
+    std::vector< std::pair<int, double> >::iterator index2;
+    for (int index = 0; index < vertices; index++)
+    {
+        for (index2 = adjacency_list[index].begin(); index2 != adjacency_list[index].end(); index2++)
+        {
+            std::cout << "Src vertex: " << index 
+                      << " Dst vertex: " <<  index2->first  
+                      << " Cost: " << index2->second << std::endl; 
+        }
+    }
+}
+ 
 int shortest_path::add_edge(ns_ns::graph_type graph, int src_vertex, int dst_vertex, double cost)
 {
     form_routing_vertices(src_vertex);
@@ -33,7 +103,7 @@ int shortest_path::add_edge(ns_ns::graph_type graph, int src_vertex, int dst_ver
         adjacency_list[src_vertex].push_back(std::make_pair(dst_vertex, cost));
         adjacency_list[dst_vertex].push_back(std::make_pair(src_vertex, cost));
     }  
-    return 0;       
+    return OK;       
 }
 
 bool compare(const std::pair<std::pair<int, int>, double> &i, const std::pair<std::pair<int, int>, double> &j)

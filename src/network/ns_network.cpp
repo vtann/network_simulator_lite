@@ -65,7 +65,7 @@ router_link* router_network::find_link(int src_vertex, int dst_vertex)
     return NULL;
 }
  
-void router_network::calculate_shortest_path(ns_ns::graph_type graph)
+void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::shortest_path_param param)
 {
     router* src_router;
     router* dst_router;
@@ -84,10 +84,23 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph)
     for (std::vector<router_link*>::iterator index = link_list.begin(); index != link_list.end(); index++)
     {
         src_router = (*index)->get_src_router();  
-        dst_router = (*index)->get_dst_router();  
-        cost = (*index)->get_link_cost();
-        adjacency_list.add_edge(graph, src_router->get_node_id(), dst_router->get_node_id(), cost);  
+        dst_router = (*index)->get_dst_router(); 
+        if (param == LINK_COST)
+        { 
+            cost = (*index)->get_link_cost();
+        }
+        else 
+        {
+            cost = (*index)->get_link_delay();
+        } 
+        if (false == adjacency_list.check_remove_dup_edge(graph, src_router->get_node_id(), dst_router->get_node_id(), cost))
+        {
+            adjacency_list.add_edge(graph, src_router->get_node_id(), dst_router->get_node_id(), cost);  
+        } 
     }
+
+    // Print edges for debugging purposes
+    // adjacency_list.print_edges();    
 
     for (int index = 0; index < vertices; index++)
     {

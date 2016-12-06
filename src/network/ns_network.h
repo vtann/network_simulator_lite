@@ -38,7 +38,7 @@ class router_network
 
     router* get_router(int node_id);
     
-    void calculate_shortest_path(ns_ns::graph_type graph);
+    void calculate_shortest_path(ns_ns::graph_type graph, shortest_path_param param);
     
     void set_routing_algorithm_param();      
     

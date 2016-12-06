@@ -21,6 +21,16 @@ void router_link::set_link_cost(double cost)
     link_cost = cost;
 }
 
+double router_link::get_link_delay() const
+{
+    return link_delay;
+}
+
+void router_link::set_link_delay(double cost)
+{
+    link_delay = cost;
+}
+
 void router_link::set_src_router(router* src)
 {
     src_router = src;
@@ -61,7 +71,7 @@ router_interface* router_link::get_dst_if()
     return dst_interface;
 }
 
-int router_link::create_link(router* src, router_interface* src_if, router* dst, router_interface* dst_if,double link_speed,double link_weight)
+int router_link::create_link(router* src, router_interface* src_if, router* dst, router_interface* dst_if, double link_delay, double link_weight)
 {
     if ((dst_if->get_router_id() == src_if->get_router_id()) && (dst->get_node_id() == src->get_node_id()))
     {
@@ -83,7 +93,7 @@ int router_link::create_link(router* src, router_interface* src_if, router* dst,
     dst_interface = dst_if;
     src_interface->set_is_connected_flag(true);
     dst_interface->set_is_connected_flag(true);
-    this->link_speed = link_speed;
+    this->link_delay = link_delay;
     this->link_cost = link_weight;
  
     return OK; 

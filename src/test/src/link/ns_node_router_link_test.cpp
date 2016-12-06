@@ -60,7 +60,7 @@ TEST(test_router_link, router_link_creation)
     EXPECT_EQ(false, router_if_2.get_is_connected_flag());
     EXPECT_EQ(false, router_if_3.get_is_connected_flag());
     
-    // create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if, double link_speed, double link_weight);
+    // create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if, double link_delay, double link_weight);
     EXPECT_EQ(0, router_link_1.create_link(&router_1, &router_if_1, &router_2, &router_if_3, 100.2, 10.2));    
     EXPECT_EQ(1, router_link_2.create_link(&router_1, &router_if_3, &router_2, &router_if_3, 100.2, 10.2));    
    

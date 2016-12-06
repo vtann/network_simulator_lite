@@ -21,6 +21,10 @@ class router_link : public node_link
 
     void set_link_cost(double cost);
 
+    double get_link_delay() const;
+
+    void set_link_delay(double cost);
+
     void set_src_router(router* src);
    
     void set_dst_router(router* dst);
@@ -37,7 +41,7 @@ class router_link : public node_link
 
     router_interface* get_dst_if();
 
-    int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if,double link_speed,double link_weight);
+    int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if, double link_delay, double link_weight);
 
     private:
     int link_id;
@@ -45,7 +49,7 @@ class router_link : public node_link
     router* dst_router;
     router_interface* src_interface;
     router_interface* dst_interface; 
-    double link_speed;
+    double link_delay;
     double link_cost;
 };
 
