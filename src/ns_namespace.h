@@ -57,10 +57,16 @@ namespace ns_ns
    
     enum packet_param_type
     {
-       SRC_MAC_ADDRESS = 0, 
-       DST_MAC_ADDRESS, 
-       SRC_IP_ADDRESS,
-       DST_IP_ADDRESS
+        SRC_MAC_ADDRESS = 0, 
+        DST_MAC_ADDRESS, 
+        SRC_IP_ADDRESS,
+        DST_IP_ADDRESS
+    }; 
+
+    enum shortest_path_param
+    {
+        LINK_COST = 0,
+        LINK_DELAY
     }; 
 }
 
