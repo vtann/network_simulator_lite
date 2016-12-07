@@ -13,11 +13,13 @@
 
 #include "util/ns_sim_utils.h"
 
+#include "sim/ns_delay_calculator.h"
+
 #include "ns_namespace.h"
 
-pthread_mutex_t send_mutex;
+pthread_mutex_t thread_mutex;
 
-router_network *rn;
+src_dst *delay_result = NULL;
 
 int main(int argc, char* argv[]) 
 {
@@ -33,6 +35,8 @@ int main(int argc, char* argv[])
         // Create XML parser class with input XML file argument. 
         XMLparser x(argv[1]);
    
+        router_network *rn;
+
         // Create a network class object. It is needed to created routing table and arp table.
         rn = new router_network;
  
@@ -43,20 +47,20 @@ int main(int argc, char* argv[])
         x.process(rn);
 
         // Calculate the shortest path and configure the routing table and ARP table.        
-        rn->calculate_shortest_path(UNDIRECTED_GRAPH);
+        rn->calculate_shortest_path(UNDIRECTED_GRAPH, LINK_COST);
 
         // Create test class
         network_test *test = new network_test(rn);   
 
         // Create mutex
-        if (OK != create_mutex(&send_mutex))
+        if (OK != create_mutex(&thread_mutex))
         {
             std::cerr << "Mutex creation failed" << std::endl; 
             return NOT_OK;        
         }         
 
         // Start the threads.  
-        test->create_features();
+        //test->create_features();
   
         return OK;
     }
