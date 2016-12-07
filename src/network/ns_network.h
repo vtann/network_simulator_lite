@@ -44,6 +44,8 @@ class router_network
     
     router_link* find_link(int src_vertex, int dst_vertex);
  
+    router_link* find_link(std::string& src_mac, std::string& dst_mac);
+ 
     private:
     std::vector<router*> router_list;
     std::vector<router_link*> link_list; 

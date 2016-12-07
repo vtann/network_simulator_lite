@@ -65,6 +65,23 @@ router_link* router_network::find_link(int src_vertex, int dst_vertex)
     return NULL;
 }
  
+router_link* router_network::find_link(std::string& src_mac, std::string& dst_mac)
+{
+    unsigned int index;
+
+    for (index = 0; index < link_list.size(); index++)
+    {
+        if (0 == src_mac.compare(link_list[index]->get_src_if()->get_interface_address()))
+        {
+            if (0 == dst_mac.compare(link_list[index]->get_dst_if()->get_interface_address()))
+            {
+                return link_list[index];   
+            }
+        }
+    }
+    return NULL;
+}
+
 void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::shortest_path_param param)
 {
     router* src_router;
