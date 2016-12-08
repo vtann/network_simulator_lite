@@ -25,7 +25,7 @@
         <interface id="1" mac="00:00:00:00:00:52" ip="192.168.20.2" mask="24" queue="10" speed="100"/>
         <interface id="2" mac="00:00:00:00:00:53" ip="192.168.70.2" mask="24" queue="10" speed="100"/>
     </node>
-    <node id="5" interfaces="4" x="16.0" y="2.0">
+    <node id="5" interfaces="4" x="16.0" y="8.0">
         <interface id="0" mac="00:00:00:00:00:61" ip="192.168.90.2" mask="24" queue="10" speed="100"/>
         <interface id="1" mac="00:00:00:00:00:62" ip="192.168.110.2" mask="24" queue="10" speed="100"/>
         <interface id="2" mac="00:00:00:00:00:63" ip="192.168.80.2" mask="24" queue="10" speed="100"/>
