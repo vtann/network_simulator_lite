@@ -1,0 +1,19 @@
+<network>
+    <node id="0" interfaces="2" x="1.0" y="1.0">
+        <interface id="0" mac="00:00:00:00:00:11" ip="192.168.0.1" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:12" ip="192.168.2.1" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="1" interfaces="2" x="3.0" y="1.0">
+        <interface id="0" mac="00:00:00:00:00:21" ip="192.168.0.2" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:22" ip="192.168.1.1" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="2" interfaces="2" x="2.0" y="2.0">
+        <interface id="0" mac="00:00:00:00:00:31" ip="192.168.1.2" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:32" ip="192.168.2.2" mask="24" queue="10" speed="100"/>
+    </node>
+
+    <link id="1" source="0.0" destination="1.0" delay="1.0" cost="1.0"/>
+    <link id="2" source="1.1" destination="2.0" delay="1.0" cost="1.0"/>
+    <link id="3" source="0.1" destination="2.1" delay="1.0" cost="1.0"/>
+</network>
+
