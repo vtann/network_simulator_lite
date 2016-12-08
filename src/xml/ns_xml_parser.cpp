@@ -81,7 +81,7 @@ int XMLparser::process(router_network* rn) {
     XMLElement* linkElement = docHandle.FirstChild().FirstChildElement("link").ToElement();
     int linkID,sourceNodeID,sourceInterfaceID,destNodeID,destInterfaceID;
     std::string source, destination;
-    double linkWeight,linkSpeed;
+    double linkCost,linkDelay;
     std::string source_nodeID, source_interfaceID, dest_nodeID, dest_interfaceID;
     std::vector<std::string> source_params,dest_params;
     const char* szAttributeText = 0;
@@ -108,14 +108,14 @@ int XMLparser::process(router_network* rn) {
         router* destNode(rn->get_router(destNodeID));
         router_interface* destInterface(destNode->get_interface(destInterfaceID));
 
-        eResult = linkElement->QueryDoubleAttribute("speed", &linkSpeed);
+        eResult = linkElement->QueryDoubleAttribute("delay", &linkDelay);
         XMLCheckResult(eResult);
 
-        eResult = linkElement->QueryDoubleAttribute("weight", &linkWeight);
+        eResult = linkElement->QueryDoubleAttribute("cost", &linkCost);
         XMLCheckResult(eResult);
 
         router_link* newLink = new router_link(linkID);
-        newLink->create_link(sourceNode,sourceInterface,destNode,destInterface,linkSpeed,linkWeight);
+        newLink->create_link(sourceNode,sourceInterface,destNode,destInterface,linkDelay,linkCost);
         rn->add_link(newLink);
         
         linkElement = linkElement->NextSiblingElement("link");

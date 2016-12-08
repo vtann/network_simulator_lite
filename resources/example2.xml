@@ -12,8 +12,8 @@
         <interface id="1" mac="00:00:00:00:00:32" ip="192.168.2.2" mask="24" queue="10" speed="100"/>
     </node>
 
-    <link id="1" source="0.0" destination="1.0" speed="1.0" weight="1.0"/>
-    <link id="2" source="1.1" destination="2.0" speed="1.0" weight="1.0"/>
-    <link id="3" source="0.1" destination="2.1" speed="1.0" weight="1.0"/>
+    <link id="1" source="0.0" destination="1.0" delay="1.0" cost="1.0"/>
+    <link id="2" source="1.1" destination="2.0" delay="1.0" cost="1.0"/>
+    <link id="3" source="0.1" destination="2.1" delay="1.0" cost="1.0"/>
 </network>
 
