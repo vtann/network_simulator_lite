@@ -131,13 +131,15 @@ router_interface::router_interface(const router_interface &r_i):node_interface(r
     this->pkts_in_recv_buf = 0;
 }
 
-void router_interface::copy_packet_to_send_ring_buffer(unsigned char *pkt)
+void router_interface::copy_packet_to_send_ring_buffer(packet_buf *pkt)
 {
     // Check for buffer overflow
     if (queue_size >= (pkts_in_send_buf + 1))
     {
         pkts_in_send_buf++;
-        if (queue_size <= (end_send_buf_idx + 1))
+        std::memcpy(if_send_buf[end_send_buf_idx]->pkt_buf, pkt->pkt_buf, DEFAULT_PACKET_SIZE_WITH_FCS);   
+        std::memcpy(if_send_buf[end_send_buf_idx]->timestamp, pkt->timestamp, sizeof(struct timeval));   
+        if (queue_size == (end_send_buf_idx + 1))
         {
             end_send_buf_idx = 0;
         }
@@ -145,23 +147,22 @@ void router_interface::copy_packet_to_send_ring_buffer(unsigned char *pkt)
         { 
             end_send_buf_idx += 1;  
         }
-        gettimeofday(if_send_buf[end_send_buf_idx]->timestamp, NULL);
-        std::memcpy(if_send_buf[end_send_buf_idx]->pkt_buf, pkt, DEFAULT_PACKET_SIZE_WITH_FCS);   
     }  
     else 
     {
         // Drop the packet and update link parameters
-        std::cout << "Drop the packet" << std::endl;
     }  
 }
 
-void router_interface::copy_packet_to_recv_ring_buffer(unsigned char *pkt)
+void router_interface::copy_packet_to_recv_ring_buffer(packet_buf *pkt)
 {
     // Check for buffer overflow
     if (queue_size >= (pkts_in_recv_buf + 1))
     {
         pkts_in_recv_buf++;
-        if (queue_size <= (end_recv_buf_idx + 1))
+        std::memcpy(if_recv_buf[end_recv_buf_idx]->pkt_buf, pkt->pkt_buf, DEFAULT_PACKET_SIZE_WITH_FCS);   
+        std::memcpy(if_recv_buf[end_recv_buf_idx]->timestamp, pkt->timestamp, sizeof(struct timeval));   
+        if (queue_size == (end_recv_buf_idx + 1))
         {
             end_recv_buf_idx = 0;
         }
@@ -169,13 +170,10 @@ void router_interface::copy_packet_to_recv_ring_buffer(unsigned char *pkt)
         { 
             end_recv_buf_idx += 1;  
         }
-        gettimeofday(if_recv_buf[end_recv_buf_idx]->timestamp, NULL);
-        std::memcpy(if_recv_buf[end_recv_buf_idx]->pkt_buf, pkt, DEFAULT_PACKET_SIZE_WITH_FCS);   
     }  
     else 
     {
         // Drop the packet and update link parameters
-        std::cout << "Drop the packet" << std::endl;
     }  
 }
 

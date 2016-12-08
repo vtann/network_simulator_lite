@@ -58,9 +58,9 @@ class router_interface : public node_interface
     
     void set_network_address(std::string& ip_addr);
    
-    void copy_packet_to_send_ring_buffer(unsigned char *pkt);
+    void copy_packet_to_send_ring_buffer(packet_buf *pkt);
     
-    void copy_packet_to_recv_ring_buffer(unsigned char *pkt);
+    void copy_packet_to_recv_ring_buffer(packet_buf *pkt);
 
     void remove_packet_from_send_ring_buffer(packet_buf *pkt);
     
