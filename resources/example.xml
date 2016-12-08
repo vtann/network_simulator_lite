@@ -17,4 +17,3 @@
     <link id="2" source="0.1" destination="1.1" speed="1.0" weight="1.0"/>
     <link id="3" source="1.2" destination="2.0" speed="1.0" weight="1.0"/>
 </network>
-
