@@ -15,6 +15,8 @@
 
 #include "sim/ns_delay_calculator.h"
 
+#include "gui/ns_gui.h"
+
 #include "ns_namespace.h"
 
 pthread_mutex_t thread_mutex;
@@ -32,7 +34,7 @@ int main(int argc, char* argv[])
     else
     {
         // Create XML parser class with input XML file argument. 
-        XMLparser x(argv[1]);
+        XMLparser xml(argv[1]);
    
         router_network *rn;
 
@@ -40,10 +42,10 @@ int main(int argc, char* argv[])
         rn = new router_network;
  
         // Load xml using the library.
-        x.load();
+        xml.load();
 
         // Process the xml and create the network.
-        x.process(rn);
+        xml.process(rn);
 
         // Calculate the shortest path and configure the routing table and ARP table.        
         rn->calculate_shortest_path(UNDIRECTED_GRAPH, LINK_COST);
@@ -72,6 +74,10 @@ int main(int argc, char* argv[])
         
         dump_delay_measurement_results();  
                
+        ns_gui gui;
+        gui.generate_layout(rn);
+        gui.create_gui();
+
         return OK;
     }
 }
