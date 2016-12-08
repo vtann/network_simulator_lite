@@ -1,0 +1,28 @@
+<network>
+    <node id="0" interfaces="2" x="7.0" y="4.0">
+        <interface id="0" mac="00:00:00:00:00:11" ip="192.168.10.1" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:13" ip="192.168.30.2" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="1" interfaces="2" x="3.0" y="9.0">
+        <interface id="0" mac="00:00:00:00:00:21" ip="192.168.30.1" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:23" ip="192.168.40.1" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="2" interfaces="2" x="10.0" y="13.0">
+        <interface id="0" mac="00:00:00:00:00:31" ip="192.168.40.2" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:34" ip="192.168.70.1" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="3" interfaces="2" x="16.0" y="2.0">
+        <interface id="0" mac="00:00:00:00:00:41" ip="192.168.20.1" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:43" ip="192.168.10.2" mask="24" queue="10" speed="100"/>
+    </node>
+    <node id="4" interfaces="2" x="22.0" y="7.0">
+        <interface id="0" mac="00:00:00:00:00:52" ip="192.168.20.2" mask="24" queue="10" speed="100"/>
+        <interface id="1" mac="00:00:00:00:00:53" ip="192.168.70.2" mask="24" queue="10" speed="100"/>
+    </node>
+
+    <link id="1" source="0.1" destination="1.0" delay="100.0" cost="100.0"/>
+    <link id="2" source="1.1" destination="2.0" delay="100.0" cost="100.0"/>
+    <link id="3" source="2.1" destination="4.1" delay="100.0" cost="100.0"/>
+    <link id="4" source="4.0" destination="3.0" delay="100.0" cost="100.0"/>
+    <link id="5" source="3.1" destination="0.0" delay="100.0" cost="100.0"/>
+</network>
