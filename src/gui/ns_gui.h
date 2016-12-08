@@ -23,11 +23,21 @@ public:
     
     void generate_layout(router_network* rn);
     
+    void draw_nodes();
+    
+    void draw_textBoxes();
+    
     void create_gui();
     
 protected:
     sf::RenderWindow* window;
+    sf::Font font;
+    sf::Text text;
+    sf::Color default_nodeColor;
+    sf::Color default_fillColor;
     
+    unsigned int font_size;
+    unsigned int node_radius;
     unsigned int window_width;
     unsigned int window_height;
     double transform_x;
