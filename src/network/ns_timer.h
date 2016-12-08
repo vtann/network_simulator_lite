@@ -31,6 +31,8 @@ class timer
         
     unsigned long get_elapsed_time_in_millisec();
         
+    unsigned long get_elapsed_time_in_microsec();
+        
     private:
     
     bool is_reset;

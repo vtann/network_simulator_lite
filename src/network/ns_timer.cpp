@@ -101,3 +101,25 @@ unsigned long timer::get_elapsed_time_in_millisec()
     return msecs;
 }
 
+unsigned long timer::get_elapsed_time_in_microsec()
+{
+    unsigned long secs;
+    unsigned long usecs;
+    unsigned long f_secs;
+
+    if (true == is_stopped)
+    {
+        secs = (end_time.tv_sec - start_time.tv_sec); 
+        usecs = (end_time.tv_usec - start_time.tv_usec);
+        f_secs = ((secs * 1000 * 1000) + usecs) + 0.5; 
+    }
+    else
+    {
+        struct timeval temp_end_time;
+        gettimeofday(&temp_end_time, NULL);
+        secs = (temp_end_time.tv_sec - start_time.tv_sec); 
+        usecs = (temp_end_time.tv_usec - start_time.tv_usec);
+        f_secs = ((secs * 1000 * 1000) + usecs) + 0.5; 
+    }
+    return f_secs;
+}
