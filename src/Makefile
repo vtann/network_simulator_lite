@@ -61,6 +61,9 @@ $(USER_BIN_DIR)/ns_shortest_path.o : $(USER_NETWORK_DIR)/ns_shortest_path.cpp $(
 $(USER_BIN_DIR)/ns_network.o : $(USER_NETWORK_DIR)/ns_network.cpp $(USER_NETWORK_DIR)/ns_network.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_network.cpp -o $(USER_BIN_DIR)/ns_network.o 
 
+$(USER_BIN_DIR)/ns_timer.o : $(USER_NETWORK_DIR)/ns_timer.cpp $(USER_NETWORK_DIR)/ns_timer.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_NETWORK_DIR)/ns_timer.cpp -o $(USER_BIN_DIR)/ns_timer.o 
+
 $(USER_BIN_DIR)/ns_packet_ethr.o : $(USER_PACKET_DIR)/ns_packet_ethr.cpp $(USER_PACKET_DIR)/ns_packet_ethr.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_PACKET_DIR)/ns_packet_ethr.cpp -o $(USER_BIN_DIR)/ns_packet_ethr.o
 
@@ -79,9 +82,12 @@ $(USER_BIN_DIR)/ns_packet_receiver.o : $(USER_FEATURE_DIR)/ns_packet_receiver.cp
 $(USER_BIN_DIR)/ns_network_tester.o : $(USER_SIM_DIR)/ns_network_tester.cpp $(USER_SIM_DIR)/ns_network_tester.h 
 	$(CXX) $(CXXFLAGS) -c $(USER_SIM_DIR)/ns_network_tester.cpp -o $(USER_BIN_DIR)/ns_network_tester.o
 
+$(USER_BIN_DIR)/ns_delay_calculator.o : $(USER_SIM_DIR)/ns_delay_calculator.cpp $(USER_SIM_DIR)/ns_delay_calculator.h 
+	$(CXX) $(CXXFLAGS) -c $(USER_SIM_DIR)/ns_delay_calculator.cpp -o $(USER_BIN_DIR)/ns_delay_calculator.o
+
 $(USER_BIN_DIR)/ns_sim_utils.o : $(USER_UTIL_DIR)/ns_sim_utils.cpp $(USER_UTIL_DIR)/ns_sim_utils.h
 	$(CXX) $(CXXFLAGS) -c $(USER_UTIL_DIR)/ns_sim_utils.cpp -o $(USER_BIN_DIR)/ns_sim_utils.o
 
-$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ns_network_tester.o ns_sim_utils.o) 
+$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_timer.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ns_network_tester.o ns_delay_calculator.o ns_sim_utils.o) 
 	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
 

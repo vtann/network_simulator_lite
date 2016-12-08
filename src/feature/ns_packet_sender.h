@@ -15,6 +15,8 @@
 
 #include "../packet/ns_packet_ethr.h"
 
+#include "../util/ns_sim_utils.h"
+
 #include "../ns_namespace.h"
 
 #ifndef __NS_PACKET_SENDER_H__

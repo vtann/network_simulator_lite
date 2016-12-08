@@ -18,8 +18,7 @@
 #include "ns_namespace.h"
 
 pthread_mutex_t thread_mutex;
-
-src_dst *delay_result = NULL;
+pthread_mutex_t result_mutex;
 
 int main(int argc, char* argv[]) 
 {
@@ -59,9 +58,20 @@ int main(int argc, char* argv[])
             return NOT_OK;        
         }         
 
+        // Create mutex
+        if (OK != create_mutex(&result_mutex))
+        {
+            std::cerr << "Mutex creation failed" << std::endl; 
+            return NOT_OK;        
+        }         
+
         // Start the threads.  
-        //test->create_features();
-  
+        test->create_features();
+
+        std::cout << "Delay measurement results:" << std::endl;  
+        
+        dump_delay_measurement_results();  
+               
         return OK;
     }
 }

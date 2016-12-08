@@ -1,7 +1,4 @@
 #include "ns_network_tester.h"
-#include "../feature/ns_packet_sender.h"
-
-extern pthread_mutex_t send_mutex;
 
 network_test::network_test(router_network *r)
 {
@@ -18,7 +15,6 @@ void network_test::create_features()
     {
         int *i = (int*) malloc(sizeof(int));    
         *i = index;
-        std::cout << "Index: " << *i << std::endl;
         sender_threads.push_back(create_sender_thread(i));
         receiver_threads.push_back(create_receiver_thread(i));
     }
@@ -43,22 +39,27 @@ std::thread network_test::create_receiver_thread(void* router_index){
 
 void* network_test::create_sender_features(void* router_index)
 {
-    lock_mutex(&send_mutex); 
     int* index = (int*) router_index;
     router* rou = r->get_router(*index);
-    packet_sender(this->r, rou); 
-    std::cout << "Node index sender " << *index << std::endl;
-    unlock_mutex(&send_mutex); 
+    
+    //if (*index == 0)
+    {   
+        packet_sender(this->r, rou); 
+        //std::cout << "Node index sender: " << *index << std::endl;
+    }
 }
 
 void* network_test::create_receiver_features(void* router_index)
 {
-    lock_mutex(&send_mutex);
     int* index = (int*) router_index;
-    //router* rou = r->get_router(*index);
-    //std::cout << "Receive ......" << std::endl;
-    std::cout << "Node index receiver " << *index << std::endl;
-    unlock_mutex(&send_mutex);
+    router* rou = r->get_router(*index);
+    packet_receiver pkt_rec;
+    
+    //if (*index == 1)
+    {   
+        pkt_rec.packet_poller(this->r, rou);  
+        //std::cout << "Node index receiver: " << *index << std::endl;
+    }
 }
 
 
