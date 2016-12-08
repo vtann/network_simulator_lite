@@ -19,6 +19,8 @@ USER_SIM_DIR = sim
 USER_UTIL_DIR = util
 USER_PACKET_DIR = packet
 USER_FEATURE_DIR = feature
+USER_GUI_DIR = gui
+LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += --std=c++0x -g -Wall -Wextra -pthread
@@ -88,6 +90,9 @@ $(USER_BIN_DIR)/ns_delay_calculator.o : $(USER_SIM_DIR)/ns_delay_calculator.cpp 
 $(USER_BIN_DIR)/ns_sim_utils.o : $(USER_UTIL_DIR)/ns_sim_utils.cpp $(USER_UTIL_DIR)/ns_sim_utils.h
 	$(CXX) $(CXXFLAGS) -c $(USER_UTIL_DIR)/ns_sim_utils.cpp -o $(USER_BIN_DIR)/ns_sim_utils.o
 
-$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_timer.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ns_network_tester.o ns_delay_calculator.o ns_sim_utils.o) 
-	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@
+$(USER_BIN_DIR)/ns_gui.o : $(USER_GUI_DIR)/ns_gui.cpp $(USER_GUI_DIR)/ns_gui.h
+	$(CXX) $(CXXFLAGS) -c $(USER_GUI_DIR)/ns_gui.cpp -o $(USER_BIN_DIR)/ns_gui.o
+
+$(USER_BIN_DIR)/network_simulator : $(addprefix $(USER_BIN_DIR)/, main.o ns_node_router.o ns_node_router_if.o ns_node_router_link.o ns_arp_table.o ns_routing_table.o ns_shortest_path.o ns_network.o ns_timer.o ns_packet_ethr.o ns_xml_parser.o tinyxml2.o ns_packet_sender.o ns_packet_receiver.o ns_network_tester.o ns_delay_calculator.o ns_sim_utils.o ns_gui.o) 
+	$(CXX) $(CXXFLAGS) -lpthread $^ -o $@ $(LIBS)
 
