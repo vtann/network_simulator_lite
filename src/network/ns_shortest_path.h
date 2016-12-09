@@ -7,6 +7,7 @@
 #include <utility> 
 #include <algorithm>
 #include <iterator>
+#include <fstream>
  
 #include "../ns_namespace.h"
 
@@ -34,6 +35,8 @@ class shortest_path
     
     void sort_vertex_queue(std::vector<std::pair<std::pair<int, int>, double> > &vertex);
      
+    void log_dijkstra_paths(int index, const std::vector<int> &previous, std::ostream& sp_file);
+
     private:
     int vertices;
     std::vector<int> routing_vertices;

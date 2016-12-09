@@ -211,3 +211,25 @@ void shortest_path::dijkstra_get_shortest_path_to(std::vector<int>&path, int ver
     }
 }
  
+void shortest_path::log_dijkstra_paths(int source, const std::vector<int> &previous, std::ostream& sp_file)
+{
+    std::vector<int> path;  
+    sp_file << "=====================================================================================================================" << std::endl;
+
+    for (auto index = 0; index < vertices; index++)
+    {
+        dijkstra_get_shortest_path_to(path, index, previous);
+        
+          
+       sp_file << "Path from Node: " << source
+               << " to Node: " << index << std::endl; 
+        for (int index2 = (int) (path.size() - 1); index2 != -1; index2--)
+        { 
+            sp_file << path[index2] 
+                    << " "; 
+        }
+        sp_file << std::endl;
+        path.clear();
+    }
+    sp_file << "=====================================================================================================================" << std::endl;
+}

@@ -97,6 +97,10 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::sho
     router_link *start_edge; 
     router_link *end_edge; 
     std::vector<int> path; 
+    std::ofstream shortpath_file;
+
+    shortpath_file.open("logs/ns_traceroute_logs.txt");
+    shortpath_file << "Shortest path for all nodes are below:" << std::endl;   
    
     for (std::vector<router_link*>::iterator index = link_list.begin(); index != link_list.end(); index++)
     {
@@ -124,7 +128,11 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::sho
         router *r = router_list[index]; 
         routing_table *r_t = r->get_routing_table();    
         arp_table *a_t = r->get_arp_table();    
-        adjacency_list.dijikstra_compute_paths(index, min_distance, previous); 
+        adjacency_list.dijikstra_compute_paths(index, min_distance, previous);
+         
+        // Below code is used for logging puposes
+        adjacency_list.log_dijkstra_paths(index, previous, shortpath_file);           
+ 
         for (int inner_index = 0; inner_index < vertices; inner_index++)
         {
             if (inner_index != index)
@@ -177,6 +185,7 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::sho
         }
         path.clear();
     }
+    shortpath_file.close();
 }
 
 void router_network::log_dump_of_all_routing_tables()
