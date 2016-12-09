@@ -103,10 +103,11 @@ void dump_delay_test_results()
 {
     for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
     {
-        std::cout << "Source IP address: " << (*index)->src_ip
-                  << " Dest IP address: " << (*index)->dst_ip
-                  << " Dest Node ID: " << (*index)->dst_node_id
+        std::cout << "Source_IP_address: " << (*index)->src_ip
+                  << " Dest_IP_address: " << (*index)->dst_ip
+                  << " Dest_Node_ID: " << (*index)->dst_node_id
                   << " Delay: " << (*index)->delay
+                  << " ms"
                   << std::endl;  
     }
 }
