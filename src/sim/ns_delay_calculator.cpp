@@ -6,6 +6,8 @@ extern pthread_mutex_t result_mutex;
 
 std::vector<std::pair<std::pair<std::string, std::string>, double> > delay_res;
 
+std::vector<total_delay*> tot_delay;
+
 unsigned long calculate_delay(struct timeval *start_time, struct timeval *end_time)
 {
     unsigned long secs;
@@ -97,6 +99,33 @@ void dump_delay_measurement_results()
     }
 }
 
+void dump_delay_test_results()
+{
+    for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
+    {
+        std::cout << "Source IP address: " << (*index)->src_ip
+                  << " Dest IP address: " << (*index)->dst_ip
+                  << " Dest Node ID: " << (*index)->dst_node_id
+                  << " Delay: " << (*index)->delay
+                  << std::endl;  
+    }
+}
+
+void concatenate_router_results(std::ostream& output, int router_id)
+{
+    for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
+    {
+        if (router_id == (*index)->dst_node_id)
+        {
+           output << "Src IP: " << (*index)->src_ip
+                  << " Dest IP: " << (*index)->dst_ip
+                  << " Delay: " << (*index)->delay
+                  << std::endl;
+        }
+    }
+    
+}
+
 void accumulate_delay(std::string src_ip, std::string dst_ip, double delay)
 {
     double int_delay = 0;
@@ -126,4 +155,33 @@ void accumulate_delay(std::string src_ip, std::string dst_ip, double delay)
     delay_res.push_back(delay_pair);  
     unlock_mutex(&result_mutex);  
 }
+
+void accumulate_total_delay(std::string src_ip, std::string dst_ip, int dst_node, double delay)
+{
+    double int_delay = 0;
+    std::vector<total_delay>::iterator index;
+   
+    lock_mutex(&result_mutex);  
+    for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
+    {
+        if (0 == src_ip.compare((*index)->src_ip))
+        {
+            if (0 == dst_ip.compare((*index)->dst_ip))
+            {
+                int_delay = (*index)->delay;
+                tot_delay.erase(index);
+                break;
+            }
+        }
+    }
+    int_delay = delay + int_delay;
+    total_delay *temp = new total_delay();
+    temp->src_ip = src_ip;  
+    temp->dst_ip = dst_ip;
+    temp->dst_node_id = dst_node;  
+    temp->delay = int_delay; 
+    tot_delay.push_back(temp); 
+    unlock_mutex(&result_mutex);  
+}
+
 

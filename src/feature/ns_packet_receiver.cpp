@@ -83,7 +83,8 @@ void packet_receiver::received_packet(router_network *r_n, router *r, int rec_in
  
         gettimeofday(&end_time, NULL);
         double f_secs = calculate_delay(pkt->timestamp, &end_time);  
-        accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, (delay + (f_secs/1000)));
+        //accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, (delay + (f_secs/1000)));
+        accumulate_total_delay(pkt_src_ip_addr, pkt_dst_ip_addr, rec_interface->get_router_id(), (delay + (f_secs/1000)));
     }
     else
     {
@@ -106,7 +107,8 @@ void packet_receiver::received_packet(router_network *r_n, router *r, int rec_in
                 rec_pkt.set_dst_mac_address(pkt->pkt_buf, dst_mac);   
                 rec_pkt.set_ttl(pkt->pkt_buf, ttl);
                 
-                accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, delay);
+                //accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, delay);
+                accumulate_total_delay(pkt_src_ip_addr, pkt_dst_ip_addr, 0, delay);
 
                 // Put it in the respective queue 
                 r_n->get_router(gw_router_id)->get_interface(gw_if_id)->copy_packet_to_recv_ring_buffer(pkt);  
