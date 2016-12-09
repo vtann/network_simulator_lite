@@ -141,7 +141,7 @@ void ns_gui::draw_links(){
         double xx1 = (x1 - text.getLocalBounds().width / 2)+cos(angle_src2dst) * 80;
         double yy1 = (y1 - font_size / 2)+sin(angle_src2dst) * 80;
         text.setColor(sf::Color(255,255,51));
-        text.setCharacterSize(11);
+        text.setCharacterSize(12);
         
         text.setString(link->get_src_if()->get_network_address());
         text.setPosition(xx1, yy1);
