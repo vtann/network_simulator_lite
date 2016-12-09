@@ -2,6 +2,8 @@
 #include <string>
 #include "ns_gui.h"
 
+extern std::vector<total_delay*> tot_delay;
+
 ns_gui::ns_gui(){
     // Create window
     sf::ContextSettings settings;
@@ -119,7 +121,6 @@ void ns_gui::draw_links(){
         auto link_start = to_draw_nodeList.at(link->get_src_router());
         auto link_end = to_draw_nodeList.at(link->get_dst_router());
         
-        //sf::Color link_color = sf::Color(128,128,128,128);
         sf::Color link_color = sf::Color(192, 192, 192);
         
         // Line between nodes
@@ -141,7 +142,7 @@ void ns_gui::draw_links(){
         double xx1 = (x1 - text.getLocalBounds().width / 2)+cos(angle_src2dst) * 80;
         double yy1 = (y1 - font_size / 2)+sin(angle_src2dst) * 80;
         text.setColor(sf::Color(255,255,51));
-        text.setCharacterSize(12);
+        text.setCharacterSize(13);
         
         text.setString(link->get_src_if()->get_network_address());
         text.setPosition(xx1, yy1);
@@ -163,15 +164,21 @@ void ns_gui::draw_textBoxes(){
     double margin = font_size / 2;
     sf::Color box_color = sf::Color(50,205,50);
     
-    std::stringstream ss;
-    //add information to stringstream for display
-    
     for (auto node : router_list ) {
         std::stringstream ss;
-        ss<<"Helloo"<<std::endl<<"World";
+        for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
+        {
+            if((*index)->dst_node_id == node->get_node_id()){
+                ss << (*index)->src_ip
+                      << " >>> " << (*index)->dst_ip
+                      << "  DELAY: " << (*index)->delay
+                      << std::endl;
+            }  
+        }
         
         text.setString(ss.str());
         text.setColor(sf::Color(220,20,60));
+        text.setCharacterSize(14);
         sf::FloatRect text_bounds = text.getLocalBounds();
         
         int x = to_draw_nodeList.at(node).x * zoom + transform_x - text_bounds.width / 2;
@@ -203,6 +210,8 @@ void ns_gui::draw_textBoxes(){
         window->draw(pointer);
         window->draw(text_infoBox);
         window->draw(text);
+        
+        ss.str(std::string());
     }
 }
 
@@ -239,8 +248,8 @@ void ns_gui::create_gui(){
         window->clear(sf::Color::Black);
     
         draw_nodes();
-        draw_textBoxes();
         draw_links();
+        draw_textBoxes();
         window->display();
     }
 }

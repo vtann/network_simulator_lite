@@ -10,7 +10,7 @@
 #include <SFML/Window/WindowStyle.hpp>
 
 #include "../ns_namespace.h"
-
+#include "../sim/ns_delay_calculator.h"
 #include "../network/ns_network.h"
 
 using namespace ns_ns;
