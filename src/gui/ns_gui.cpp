@@ -13,6 +13,17 @@ ns_gui::ns_gui(){
     window = new sf::RenderWindow(sf::VideoMode(window_width, window_height), "nsLite - Delay Analyzer Beta", sf::Style::Default, settings);
     
     font.loadFromFile("gui/arial.ttf");
+
+
+    font_size = 20;
+    text.setFont(font);
+    text.setCharacterSize(font_size); // in pixels
+    text.setStyle(sf::Text::Regular);
+    
+    default_nodeColor = sf::Color(0,0,255);
+    default_fillColor = sf::Color(47,79,79);
+    
+    node_radius = 25;
     
     transform_x = window_width / 2.0;
     transform_y = window_height / 2.0;
@@ -70,6 +81,80 @@ void ns_gui::generate_layout(router_network* rn){
     }
     
 }
+
+void ns_gui::draw_nodes(){
+    sf::CircleShape node_shape(node_radius);
+    
+    for (auto& node : to_draw_nodeList) {
+        const int& x = node.second.x * zoom + transform_x;
+        const int& y = node.second.y * zoom + transform_y;
+        
+        sf::Color outline_color = default_nodeColor;
+        sf::Color fill_color = default_fillColor;
+        int thickness = 2;
+        
+        node_shape.setOutlineColor(outline_color);
+        node_shape.setOutlineThickness(thickness);
+        node_shape.setFillColor(fill_color);
+        node_shape.setOrigin(node_radius, node_radius);
+        node_shape.setPosition(x, y);
+        window->draw(node_shape);
+        
+        text.setString(std::to_string((node.first->get_node_id())));
+        text.setPosition(x - text.getLocalBounds().width / 2, y - font_size / 2);
+        text.setCharacterSize(18);
+        text.setColor(sf::Color::White);
+        window->draw(text);
+    }
+}
+
+void ns_gui::draw_textBoxes(){
+    
+    double margin = font_size / 2;
+    sf::Color box_color = sf::Color(50,205,50);
+    
+    std::stringstream ss;
+    //add information to stringstream for display
+    
+    for (auto node : router_list ) {
+        std::stringstream ss;
+        ss<<"Helloo"<<std::endl<<"World";
+        
+        text.setString(ss.str());
+        text.setColor(sf::Color(220,20,60));
+        sf::FloatRect text_bounds = text.getLocalBounds();
+        
+        int x = to_draw_nodeList.at(node).x * zoom + transform_x - text_bounds.width / 2;
+        int y = to_draw_nodeList.at(node).y * zoom + transform_y - text_bounds.height - margin * 5;
+        
+        text.setPosition(x, y);
+        
+        // Box
+        sf::RectangleShape text_infoBox(sf::Vector2f(text_bounds.width + margin * 2, text_bounds.height + margin * 3));
+        
+        text_infoBox.setFillColor(sf::Color(0, 0, 0, 128));
+        text_infoBox.setOutlineColor(box_color);
+        text_infoBox.setOutlineThickness(1);
+        text_infoBox.setPosition(x - margin, y - margin);
+        
+        // Pointing triangle
+        sf::ConvexShape pointer(3);
+        
+        sf::FloatRect text_infoBox_bounds = text_infoBox.getLocalBounds();
+        pointer.setPoint(0, sf::Vector2f(-5, 0));
+        pointer.setPoint(1, sf::Vector2f(5, 0));
+        pointer.setPoint(2, sf::Vector2f(0, 5));
+        pointer.setPosition(x - margin + text_infoBox_bounds.width / 2, y - margin + text_infoBox_bounds.height);
+        
+        pointer.setFillColor(box_color);
+        pointer.setOutlineColor(box_color);
+        pointer.setOutlineThickness(1);
+
+        window->draw(pointer);
+        window->draw(text_infoBox);
+        window->draw(text);
+    }
+}
     
 void ns_gui::create_gui(){
     while (window->isOpen())
@@ -95,7 +180,6 @@ void ns_gui::create_gui(){
         window->clear(sf::Color::Black);
     
         draw_nodes();
-        draw_links();
         draw_textBoxes();
         window->display();
     }
