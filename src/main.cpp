@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
 
         std::cout << "Delay measurement results:" << std::endl;  
         
-        dump_delay_measurement_results();  
-               
+        dump_delay_test_results();
+       
         ns_gui gui;
         gui.generate_layout(rn);
         gui.create_gui();
