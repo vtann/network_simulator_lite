@@ -4,6 +4,8 @@
 
 #include <list>
 
+#include <fstream>
+
 #include "../node/ns_node_router.h"
 
 #include "../link/ns_node_router_link.h"
@@ -46,6 +48,8 @@ class router_network
  
     router_link* find_link(std::string& src_mac, std::string& dst_mac);
  
+    void log_dump_of_all_routing_tables();
+
     private:
     std::vector<router*> router_list;
     std::vector<router_link*> link_list; 

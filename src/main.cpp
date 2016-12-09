@@ -50,6 +50,9 @@ int main(int argc, char* argv[])
         // Calculate the shortest path and configure the routing table and ARP table.        
         rn->calculate_shortest_path(UNDIRECTED_GRAPH, LINK_COST);
 
+        // Log routing table of all nodes
+        rn->log_dump_of_all_routing_tables();          
+
         // Create test class
         network_test *test = new network_test(rn);   
 

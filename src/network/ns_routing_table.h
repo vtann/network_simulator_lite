@@ -26,6 +26,8 @@ class routing_table
 
     void dump_routing_table_entries();
 
+    void dump_routing_table_entries(std::ostream& routing_file);
+
     std::list<routing_entry*> get_routing_table();  
 
     private:

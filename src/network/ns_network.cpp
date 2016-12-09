@@ -179,6 +179,23 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::sho
     }
 }
 
+void router_network::log_dump_of_all_routing_tables()
+{
+    std::ofstream routing_file;
 
+    routing_file.open("logs/ns_routing_table_logs.txt");
+    routing_file << "Routing table of all nodes are below:" << std::endl;  
+    
+    for (auto index = router_list.begin(); index != router_list.end(); index++)
+    {
+        routing_file << "=====================================================================================================================" << std::endl;
+        routing_file << "Node: " << (*index)->get_node_id() << std::endl;  
+        routing_file << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        (*index)->get_routing_table()->dump_routing_table_entries(routing_file); 
+        routing_file << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        routing_file << "=====================================================================================================================" << std::endl;
+    } 
+    routing_file.close();
+}
 
 
