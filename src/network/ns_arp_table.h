@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+#include <iomanip>
+
 #ifndef __NS_ARP_TABLE_H__
 #define __NS_ARP_TABLE_H__
 
@@ -23,6 +25,8 @@ class arp_table
     int get_num_of_arp_table_entries();
    
     std::string find_entry(std::string gw_ip_address);
+
+    void dump_arp_table_entries(std::ostream& arp_file);
  
     private:
     std::list<arp_entry*> list_arp_table;

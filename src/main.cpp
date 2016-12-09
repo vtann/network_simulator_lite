@@ -53,6 +53,9 @@ int main(int argc, char* argv[])
         // Log routing table of all nodes
         rn->log_dump_of_all_routing_tables();          
 
+        // Log arp table of all nodes
+        rn->log_dump_of_all_arp_tables();          
+
         // Create test class
         network_test *test = new network_test(rn);   
 

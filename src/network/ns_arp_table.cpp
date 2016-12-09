@@ -30,3 +30,18 @@ std::string arp_table::find_entry(std::string gw_ip_address)
     } 
     return NULL;
 }
+
+void arp_table::dump_arp_table_entries(std::ostream& arp_file)
+{
+    arp_file << std::left << std::setw(20) << "Gateway IP Address "
+              << std::left << std::setw(20) << "Gateway MAC Address"
+              << std::endl;
+
+    for (std::list<arp_entry*>::iterator index = list_arp_table.begin(); index != list_arp_table.end(); index++)
+    {
+        arp_file << std::left << std::setw(20) << (*index)->gateway_ip_address
+                  << std::left << std::setw(20) << (*index)->gateway_mac_address
+                  << std::endl;
+    }
+}
+

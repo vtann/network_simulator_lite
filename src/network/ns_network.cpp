@@ -198,4 +198,23 @@ void router_network::log_dump_of_all_routing_tables()
     routing_file.close();
 }
 
+void router_network::log_dump_of_all_arp_tables()
+{
+    std::ofstream arp_file;
+
+    arp_file.open("logs/ns_arp_table_logs.txt");
+    arp_file << "ARP table of all nodes are below:" << std::endl;  
+    
+    for (auto index = router_list.begin(); index != router_list.end(); index++)
+    {
+        arp_file << "=====================================================================================================================" << std::endl;
+        arp_file << "Node: " << (*index)->get_node_id() << std::endl;  
+        arp_file << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        (*index)->get_arp_table()->dump_arp_table_entries(arp_file); 
+        arp_file << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        arp_file << "=====================================================================================================================" << std::endl;
+    } 
+    arp_file.close();
+}
+
 

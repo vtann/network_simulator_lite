@@ -50,6 +50,8 @@ class router_network
  
     void log_dump_of_all_routing_tables();
 
+    void log_dump_of_all_arp_tables();
+
     private:
     std::vector<router*> router_list;
     std::vector<router_link*> link_list; 
