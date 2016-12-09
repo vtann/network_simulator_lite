@@ -39,27 +39,25 @@ std::thread network_test::create_receiver_thread(void* router_index){
 
 void* network_test::create_sender_features(void* router_index)
 {
+    void *return_value = nullptr; 
     int* index = (int*) router_index;
     router* rou = r->get_router(*index);
     
-    //if (*index == 0)
-    {   
-        packet_sender(this->r, rou); 
-        //std::cout << "Node index sender: " << *index << std::endl;
-    }
+    packet_sender(this->r, rou);
+
+    return return_value; 
 }
 
 void* network_test::create_receiver_features(void* router_index)
 {
+    void *return_value = nullptr; 
     int* index = (int*) router_index;
     router* rou = r->get_router(*index);
     packet_receiver pkt_rec;
     
-    //if (*index == 1)
-    {   
-        pkt_rec.packet_poller(this->r, rou);  
-        //std::cout << "Node index receiver: " << *index << std::endl;
-    }
+    pkt_rec.packet_poller(this->r, rou);  
+    
+    return return_value; 
 }
 
 
