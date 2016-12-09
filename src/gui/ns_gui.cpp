@@ -206,6 +206,11 @@ void ns_gui::draw_textBoxes(){
     }
 }
 
+bool ns_gui::window_exists(){
+    sf::Window* pointer_window = window;
+    return pointer_window;
+}
+
 void ns_gui::create_gui(){
     while (!window_exists()) {
         // wait
