@@ -2,6 +2,7 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <vector>
+#include <fstream>
 
 #include "../util/ns_sim_utils.h"
 
@@ -50,5 +51,7 @@ void accumulate_delay(std::string src_ip, std::string dst_ip, double delay);
 void accumulate_total_delay(std::string src_ip, std::string dst_ip, int dst_node, double delay);
 
 void concatenate_router_results(std::ostream& output, int router_id);
+
+void log_dump_delay_test_results();
 
 #endif // __NS_DELAY_CALCULATOR_H__

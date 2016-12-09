@@ -80,6 +80,8 @@ int main(int argc, char* argv[])
         
         dump_delay_test_results();
        
+        log_dump_delay_test_results();
+       
         ns_gui gui;
         gui.generate_layout(rn);
         gui.create_gui();

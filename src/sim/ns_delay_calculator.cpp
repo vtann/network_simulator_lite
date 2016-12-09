@@ -95,6 +95,7 @@ void dump_delay_measurement_results()
         std::cout << "Source IP address: " << src_dst.first
                   << " Dest IP address: " << src_dst.second
                   << " Delay: " << delay_res[index].second
+                  << "ms"
                   << std::endl;  
     }
 }
@@ -121,10 +122,31 @@ void concatenate_router_results(std::ostream& output, int router_id)
            output << "Src IP: " << (*index)->src_ip
                   << " Dest IP: " << (*index)->dst_ip
                   << " Delay: " << (*index)->delay
+                  << "ms"
                   << std::endl;
         }
     }
     
+}
+
+void log_dump_delay_test_results()
+{
+    std::ofstream delay_results;
+
+    delay_results.open("logs/ns_output_logs.txt");
+    delay_results << "Packet delay results" << std::endl;  
+    
+    delay_results << "=====================================================================================================================" << std::endl;
+    for (auto index = tot_delay.begin(); index != tot_delay.end(); index++)
+    {
+        delay_results << "Source IP address: " << (*index)->src_ip
+                      << " Dest IP address: " << (*index)->dst_ip
+                      << " Dest Node ID: " << (*index)->dst_node_id
+                      << " Delay: " << (*index)->delay
+                      << "ms"
+                      << std::endl;  
+    }
+    delay_results << "=====================================================================================================================" << std::endl;
 }
 
 void accumulate_delay(std::string src_ip, std::string dst_ip, double delay)
