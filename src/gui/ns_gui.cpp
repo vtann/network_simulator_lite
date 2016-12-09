@@ -171,7 +171,7 @@ void ns_gui::draw_textBoxes(){
             if((*index)->dst_node_id == node->get_node_id()){
                 ss << (*index)->src_ip
                       << " >>> " << (*index)->dst_ip
-                      << "  DELAY: " << (*index)->delay
+                      << "  DELAY: " << (*index)->delay <<"ms"
                       << std::endl;
             }  
         }
