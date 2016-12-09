@@ -27,6 +27,8 @@ public:
     
     void draw_textBoxes();
     
+    void draw_links();
+    
     void create_gui();
     
 protected:

@@ -108,6 +108,56 @@ void ns_gui::draw_nodes(){
     }
 }
 
+void ns_gui::draw_links(){
+    for (auto& link : to_draw_linkList) {
+        
+        //int source_id = link->get_src_router()->get_node_id();
+        //int source_if_id = link->get_src_if()->get_interface_id();
+        //int dest_id = link->get_dst_router()->get_node_id();
+        //int dest_if_id = link->get_dst_if()->get_interface_id();
+        
+        auto link_start = to_draw_nodeList.at(link->get_src_router());
+        auto link_end = to_draw_nodeList.at(link->get_dst_router());
+        
+        //sf::Color link_color = sf::Color(128,128,128,128);
+        sf::Color link_color = sf::Color(192, 192, 192);
+        
+        // Line between nodes
+        double x1 = link_start.x * zoom + transform_x;
+        double y1 = link_start.y * zoom + transform_y;
+        double x2 = link_end.x * zoom + transform_x;
+        double y2 = link_end.y * zoom + transform_y;
+        sf::Vertex line[] =
+        {
+            sf::Vertex(sf::Vector2f(x1, y1), link_color),
+            sf::Vertex(sf::Vector2f(x2, y2), link_color)
+        };
+        
+
+        window->draw(line, 2, sf::Lines);
+        
+        float angle_src2dst = atan2(((y2 - font_size / 2) - (y1 - font_size / 2)), ((x2 - text.getLocalBounds().width / 2) - (x1 - text.getLocalBounds().width / 2)));
+        
+        double xx1 = (x1 - text.getLocalBounds().width / 2)+cos(angle_src2dst) * 80;
+        double yy1 = (y1 - font_size / 2)+sin(angle_src2dst) * 80;
+        text.setColor(sf::Color(255,255,51));
+        text.setCharacterSize(11);
+        
+        text.setString(link->get_src_if()->get_network_address());
+        text.setPosition(xx1, yy1);
+        window->draw(text);
+        
+        float angle_dst2src = atan2(((y1 - font_size / 2)-(y2 - font_size / 2)), ((x1 - text.getLocalBounds().width / 2)-(x2 - text.getLocalBounds().width / 2)));
+        
+        double xx2 = (x2 - text.getLocalBounds().width / 2)+cos(angle_dst2src) * 80;
+        double yy2 = (y2 - font_size / 2)+sin(angle_dst2src) * 80;
+        
+        text.setString(link->get_dst_if()->get_network_address());
+        text.setPosition(xx2, yy2);
+        window->draw(text);
+    }
+}
+
 void ns_gui::draw_textBoxes(){
     
     double margin = font_size / 2;
@@ -155,7 +205,7 @@ void ns_gui::draw_textBoxes(){
         window->draw(text);
     }
 }
-    
+
 void ns_gui::create_gui(){
     while (window->isOpen())
     {
@@ -181,6 +231,7 @@ void ns_gui::create_gui(){
     
         draw_nodes();
         draw_textBoxes();
+        draw_links();
         window->display();
     }
 }
