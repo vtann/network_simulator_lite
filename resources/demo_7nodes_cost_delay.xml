@@ -40,14 +40,14 @@
 
     <link id="1" source="0.2" destination="1.0" delay="100.0" cost="100.0"/>
     <link id="2" source="1.2" destination="2.0" delay="100.0" cost="100.0"/>
-    <link id="3" source="2.3" destination="4.2" delay="100.0" cost="400.0"/>
+    <link id="3" source="2.3" destination="4.2" delay="500.0" cost="500.0"/>
     <link id="4" source="4.1" destination="3.0" delay="100.0" cost="100.0"/>
-    <link id="5" source="3.2" destination="0.0" delay="100.0" cost="100.0"/>
+    <link id="5" source="3.2" destination="0.0" delay="100.0" cost="300.0"/>
     <link id="6" source="0.1" destination="6.0" delay="100.0" cost="100.0"/>
     <link id="7" source="3.1" destination="5.1" delay="100.0" cost="100.0"/>
     <link id="8" source="2.1" destination="6.2" delay="100.0" cost="100.0"/>
     <link id="9" source="2.2" destination="5.2" delay="100.0" cost="100.0"/>
-    <link id="10" source="1.1" destination="6.1" delay="100.0" cost="100.0"/>
-    <link id="11" source="6.3" destination="5.0" delay="100.0" cost="100.0"/>
+    <link id="10" source="1.1" destination="6.1" delay="200.0" cost="200.0"/>
+    <link id="11" source="6.3" destination="5.0" delay="200.0" cost="200.0"/>
     <link id="12" source="5.3" destination="4.0" delay="100.0" cost="100.0"/>
 </network>
