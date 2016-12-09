@@ -207,6 +207,10 @@ void ns_gui::draw_textBoxes(){
 }
 
 void ns_gui::create_gui(){
+    while (!window_exists()) {
+        // wait
+    }
+
     while (window->isOpen())
     {
         sf::Event event;

@@ -28,6 +28,8 @@ public:
     void draw_textBoxes();
     
     void draw_links();
+
+    bool window_exists();
     
     void create_gui();
     
