@@ -19,7 +19,7 @@
 class network_test
 {
     public:
-    network_test(router_network *r);    
+    network_test(std::shared_ptr<router_network> r);    
 
     ~network_test();    
 
@@ -34,7 +34,7 @@ class network_test
     void* create_sender_features(void* router_index);
     
     private:
-    router_network *r;    
+    std::shared_ptr<router_network> r;    
 };
 
 #endif // __NS_NETWORK_TESTER_H__

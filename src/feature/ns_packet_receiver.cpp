@@ -4,7 +4,7 @@ extern pthread_mutex_t thread_mutex;
 
 class ethr_pkt;
 
-void packet_receiver::packet_poller(router_network *r_n, router *r)
+void packet_receiver::packet_poller(std::shared_ptr<router_network> r_n, router *r)
 {
     timer r_timer;
     
@@ -35,7 +35,7 @@ void packet_receiver::packet_poller(router_network *r_n, router *r)
     r_timer.stop_timer();
 }
 
-void packet_receiver::received_packet(router_network *r_n, router *r, int rec_interface_id, packet_buf *pkt)
+void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, router *r, int rec_interface_id, packet_buf *pkt)
 {
     double delay;
     router_link* link = NULL;

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
+#include <mutex>
 
 #include "tinyxml2.h"
 
@@ -23,7 +25,7 @@ public:
     
     int load();
 
-    int process(router_network* rn);
+    int process(std::shared_ptr<router_network> rn);
     
     std::vector<std::string> get_nodeAndinterfaceID(std::string param);
     

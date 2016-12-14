@@ -3,6 +3,7 @@
 #include <sstream>
 #include <map>
 #include <cfloat>
+#include <memory>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -10,7 +11,9 @@
 #include <SFML/Window/WindowStyle.hpp>
 
 #include "../ns_namespace.h"
+
 #include "../sim/ns_delay_calculator.h"
+
 #include "../network/ns_network.h"
 
 using namespace ns_ns;
@@ -21,7 +24,7 @@ public:
     
     ~ns_gui();
     
-    void generate_layout(router_network* rn);
+    void generate_layout(std::shared_ptr<router_network> rn);
     
     void draw_nodes();
     

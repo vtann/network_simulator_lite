@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "ns_gui.h"
 
 extern std::vector<total_delay*> tot_delay;
@@ -36,7 +34,8 @@ ns_gui::~ns_gui(){
     window->close();
 }
 
-void ns_gui::generate_layout(router_network* rn){
+void ns_gui::generate_layout(std::shared_ptr<router_network> rn)
+{
     to_draw_nodeList.clear();
     
     double x_max = -DBL_MAX;
@@ -63,8 +62,8 @@ void ns_gui::generate_layout(router_network* rn){
     
     // Apply scaling so that original aspect ratio is retained
     // and everything fits on the screen
-    double x_ratio = 0.75 * (window_width) / (x_max != 0.0 ? x_max : window_width);
-    double y_ratio = 0.75 * (window_height) / (y_max != 0.0 ? y_max : window_height);
+    double x_ratio = 0.50 * (window_width) / (x_max != 0.0 ? x_max : window_width);
+    double y_ratio = 0.50 * (window_height) / (y_max != 0.0 ? y_max : window_height);
     double scale_ratio;
     
     if (x_ratio < y_ratio) scale_ratio = x_ratio;

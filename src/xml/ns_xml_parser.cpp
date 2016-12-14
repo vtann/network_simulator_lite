@@ -14,7 +14,7 @@ int XMLparser::load() {
     return OK;
 }
 
-int XMLparser::process(router_network* rn) {
+int XMLparser::process(std::shared_ptr<router_network> rn) {
     
     // Node
     XMLHandle docHandle(xmlDoc);

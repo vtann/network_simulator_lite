@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "../ns_namespace.h"
 
@@ -30,9 +31,9 @@
 class packet_receiver : timer
 {
     public:
-    void packet_poller(router_network *r_n, router *r);
+    void packet_poller(std::shared_ptr<router_network> r_n, router *r);
     
-    void received_packet(router_network *r_n, router *r, int rec_if_id, packet_buf *pkt); 
+    void received_packet(std::shared_ptr<router_network> r_n, router *r, int rec_if_id, packet_buf *pkt); 
 };
 
 #endif //__NS_PACKET_RECEIVER_H__

@@ -1,6 +1,6 @@
 #include "ns_network_tester.h"
 
-network_test::network_test(router_network *r)
+network_test::network_test(std::shared_ptr<router_network> r)
 {
     this->r = r;
 }

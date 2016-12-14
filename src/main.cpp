@@ -36,10 +36,8 @@ int main(int argc, char* argv[])
         // Create XML parser class with input XML file argument. 
         XMLparser xml(argv[1]);
    
-        router_network *rn;
-
         // Create a network class object. It is needed to created routing table and arp table.
-        rn = new router_network;
+        std::shared_ptr<router_network> rn(new router_network);
  
         // Load xml using the library.
         xml.load();
@@ -59,14 +57,14 @@ int main(int argc, char* argv[])
         // Create test class
         network_test *test = new network_test(rn);   
 
-        // Create mutex
+        // Create interface buffer mutex
         if (OK != create_mutex(&thread_mutex))
         {
             std::cerr << "Mutex creation failed" << std::endl; 
             return NOT_OK;        
         }         
 
-        // Create mutex
+        // Create result mutex
         if (OK != create_mutex(&result_mutex))
         {
             std::cerr << "Mutex creation failed" << std::endl; 
