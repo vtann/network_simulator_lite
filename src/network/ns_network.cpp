@@ -18,17 +18,17 @@ int router_network::number_of_links()
     return link_list.size(); 
 }
 
-std::vector<router*> router_network::get_all_routers()
+std::vector<std::shared_ptr<router> > router_network::get_all_routers()
 {
     return router_list; 
 }
 
-std::vector<router_link*> router_network::get_all_links()
+std::vector<std::shared_ptr<router_link> > router_network::get_all_links()
 {
     return link_list; 
 }
 
-router* router_network::get_router(int node_id)
+std::shared_ptr<router> router_network::get_router(int node_id)
 {
     for (unsigned int index = 0; index < router_list.size(); index++)
     {
@@ -40,17 +40,17 @@ router* router_network::get_router(int node_id)
     return NULL;
 }
 
-void router_network::add_router(router* new_router)
+void router_network::add_router(std::shared_ptr<router> new_router)
 {
     router_list.push_back(new_router);
 }
 
-void router_network::add_link(router_link* new_link)
+void router_network::add_link(std::shared_ptr<router_link> new_link)
 {
     link_list.push_back(new_link);
 }
 
-router_link* router_network::find_link(int src_vertex, int dst_vertex)
+std::shared_ptr<router_link> router_network::find_link(int src_vertex, int dst_vertex)
 {
     for (unsigned int index = 0; index < link_list.size(); index++)
     {
@@ -65,7 +65,7 @@ router_link* router_network::find_link(int src_vertex, int dst_vertex)
     return NULL;
 }
  
-router_link* router_network::find_link(std::string& src_mac, std::string& dst_mac)
+std::shared_ptr<router_link> router_network::find_link(std::string& src_mac, std::string& dst_mac)
 {
     unsigned int index;
 
@@ -84,25 +84,25 @@ router_link* router_network::find_link(std::string& src_mac, std::string& dst_ma
 
 void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::shortest_path_param param)
 {
-    router* src_router;
-    router* dst_router;
-    router_interface* src_if;
-    router_interface* gw_if;
-    router_interface* dst_if;
+    std::shared_ptr<router> src_router;
+    std::shared_ptr<router> dst_router;
+    std::shared_ptr<router_interface> src_if;
+    std::shared_ptr<router_interface> gw_if;
+    std::shared_ptr<router_interface> dst_if;
     int vertices = router_list.size();
     double cost; 
     std::vector<double> min_distance;
     std::vector<int> previous;
     shortest_path adjacency_list(vertices);
-    router_link *start_edge; 
-    router_link *end_edge; 
+    std::shared_ptr<router_link> start_edge; 
+    std::shared_ptr<router_link> end_edge; 
     std::vector<int> path; 
     std::ofstream shortpath_file;
 
     shortpath_file.open("logs/ns_traceroute_logs.txt");
     shortpath_file << "Shortest path for all nodes are below:" << std::endl;   
    
-    for (std::vector<router_link*>::iterator index = link_list.begin(); index != link_list.end(); index++)
+    for (std::vector<std::shared_ptr<router_link> >::iterator index = link_list.begin(); index != link_list.end(); index++)
     {
         src_router = (*index)->get_src_router();  
         dst_router = (*index)->get_dst_router(); 
@@ -125,7 +125,7 @@ void router_network::calculate_shortest_path(ns_ns::graph_type graph, ns_ns::sho
 
     for (int index = 0; index < vertices; index++)
     {
-        router *r = router_list[index]; 
+        std::shared_ptr<router> r = router_list[index]; 
         routing_table *r_t = r->get_routing_table();    
         arp_table *a_t = r->get_arp_table();    
         adjacency_list.dijikstra_compute_paths(index, min_distance, previous);

@@ -4,7 +4,7 @@ extern pthread_mutex_t thread_mutex;
 
 using namespace ns_ns;
 
-void packet_sender(std::shared_ptr<router_network> rn, router* r)
+void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r)
 {
     routing_table* rt;
     std::list<routing_entry*> re;

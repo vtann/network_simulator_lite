@@ -4,13 +4,13 @@ extern pthread_mutex_t thread_mutex;
 
 class ethr_pkt;
 
-void packet_receiver::packet_poller(std::shared_ptr<router_network> r_n, router *r)
+void packet_receiver::packet_poller(std::shared_ptr<router_network> r_n, std::shared_ptr<router> r)
 {
     timer r_timer;
     
     r_timer.start_timer();
 
-    std::vector<router_interface*> interfaces = r->get_all_interfaces(); 
+    std::vector<std::shared_ptr<router_interface> > interfaces = r->get_all_interfaces(); 
     while (1)
     {
         for (unsigned int index = 0; index < interfaces.size(); index++)
@@ -35,15 +35,15 @@ void packet_receiver::packet_poller(std::shared_ptr<router_network> r_n, router 
     r_timer.stop_timer();
 }
 
-void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, router *r, int rec_interface_id, packet_buf *pkt)
+void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, std::shared_ptr<router> r, int rec_interface_id, packet_buf *pkt)
 {
     double delay;
-    router_link* link = NULL;
+    std::shared_ptr<router_link> link = NULL;
     ethr_pkt rec_pkt;
     
     rec_pkt.parse_pkt(pkt->pkt_buf);
 
-    router_interface *rec_interface = r->get_interface(rec_interface_id);
+    std::shared_ptr<router_interface> rec_interface = r->get_interface(rec_interface_id);
     
     std::string if_mac_addr = rec_interface->get_interface_address();
     std::string pkt_dst_mac_addr = rec_pkt.get_dst_mac_address();

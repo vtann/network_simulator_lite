@@ -26,35 +26,35 @@ class router_network
      
     ~router_network();
 
-    void add_router(router* new_router);
+    void add_router(std::shared_ptr<router> new_router);
 
-    void add_link(router_link* new_link);
+    void add_link(std::shared_ptr<router_link> new_link);
 
     int number_of_routers();
     
     int number_of_links();
    
-    std::vector<router*> get_all_routers();
+    std::vector<std::shared_ptr<router> > get_all_routers();
 
-    std::vector<router_link*> get_all_links();
+    std::vector<std::shared_ptr<router_link> > get_all_links();
 
-    router* get_router(int node_id);
+    std::shared_ptr<router> get_router(int node_id);
     
     void calculate_shortest_path(ns_ns::graph_type graph, shortest_path_param param);
     
     void set_routing_algorithm_param();      
     
-    router_link* find_link(int src_vertex, int dst_vertex);
+    std::shared_ptr<router_link> find_link(int src_vertex, int dst_vertex);
  
-    router_link* find_link(std::string& src_mac, std::string& dst_mac);
+    std::shared_ptr<router_link> find_link(std::string& src_mac, std::string& dst_mac);
  
     void log_dump_of_all_routing_tables();
 
     void log_dump_of_all_arp_tables();
 
     private:
-    std::vector<router*> router_list;
-    std::vector<router_link*> link_list; 
+    ns_ns::routers router_list;
+    ns_ns::links link_list; 
 };
 
 #endif // __NS_NETWORK_H__

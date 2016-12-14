@@ -8,7 +8,7 @@ network_test::network_test(std::shared_ptr<router_network> r)
 void network_test::create_features()
 {
     std::list<std::thread> sender_threads, receiver_threads;
-    std::vector<router*> routers = r->get_all_routers();
+    std::vector<std::shared_ptr<router> > routers = r->get_all_routers();
 
     // Start threads on nodes   
     for (int index = 0; index < r->number_of_routers(); index++)
@@ -41,7 +41,7 @@ void* network_test::create_sender_features(void* router_index)
 {
     void *return_value = nullptr; 
     int* index = (int*) router_index;
-    router* rou = r->get_router(*index);
+    std::shared_ptr<router> rou = r->get_router(*index);
     
     packet_sender(this->r, rou);
 
@@ -52,7 +52,7 @@ void* network_test::create_receiver_features(void* router_index)
 {
     void *return_value = nullptr; 
     int* index = (int*) router_index;
-    router* rou = r->get_router(*index);
+    std::shared_ptr<router> rou = r->get_router(*index);
     packet_receiver pkt_rec;
     
     pkt_rec.packet_poller(this->r, rou);  

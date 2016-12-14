@@ -31,47 +31,47 @@ void router_link::set_link_delay(double cost)
     link_delay = cost;
 }
 
-void router_link::set_src_router(router* src)
+void router_link::set_src_router(std::shared_ptr<router> src)
 {
     src_router = src;
 }
 
-void router_link::set_dst_router(router* dst)
+void router_link::set_dst_router(std::shared_ptr<router> dst)
 {
     dst_router = dst;
 }
 
-void router_link::set_src_if(router_interface* src)
+void router_link::set_src_if(std::shared_ptr<router_interface> src)
 {
     src_interface = src;
 }
 
-void router_link::set_dst_if(router_interface* dst)
+void router_link::set_dst_if(std::shared_ptr<router_interface> dst)
 {
     dst_interface = dst;
 }
 
-router* router_link::get_src_router() 
+std::shared_ptr<router> router_link::get_src_router() 
 {
     return src_router;
 }
 
-router* router_link::get_dst_router() 
+std::shared_ptr<router> router_link::get_dst_router() 
 {
     return dst_router;
 }
 
-router_interface* router_link::get_src_if() 
+std::shared_ptr<router_interface> router_link::get_src_if() 
 {
     return src_interface;
 }
 
-router_interface* router_link::get_dst_if() 
+std::shared_ptr<router_interface> router_link::get_dst_if() 
 {
     return dst_interface;
 }
 
-int router_link::create_link(router* src, router_interface* src_if, router* dst, router_interface* dst_if, double link_delay, double link_weight)
+int router_link::create_link(std::shared_ptr<router> src, std::shared_ptr<router_interface> src_if, std::shared_ptr<router> dst, std::shared_ptr<router_interface> dst_if, double link_delay, double link_weight)
 {
     if ((dst_if->get_router_id() == src_if->get_router_id()) && (dst->get_node_id() == src->get_node_id()))
     {

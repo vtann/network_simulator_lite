@@ -56,8 +56,8 @@ protected:
         double y;
     };
     
-    std::map<router*,ns_gui_axis> to_draw_nodeList;
-    std::vector<router*> router_list;
-    std::vector<router_link*> to_draw_linkList;
+    std::map<std::shared_ptr<router>, ns_gui_axis> to_draw_nodeList;
+    std::vector<std::shared_ptr<router> > router_list;
+    std::vector<std::shared_ptr<router_link> > to_draw_linkList;
     
 };

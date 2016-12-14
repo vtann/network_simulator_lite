@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <memory>
 
 #include "ns_node_link.h"
 
@@ -25,30 +26,30 @@ class router_link : public node_link
 
     void set_link_delay(double cost);
 
-    void set_src_router(router* src);
+    void set_src_router(std::shared_ptr<router> src);
    
-    void set_dst_router(router* dst);
+    void set_dst_router(std::shared_ptr<router> dst);
 
-    void set_src_if(router_interface* src);
+    void set_src_if(std::shared_ptr<router_interface> src);
  
-    void set_dst_if(router_interface* dst);
+    void set_dst_if(std::shared_ptr<router_interface> dst);
 
-    router* get_src_router();
+    std::shared_ptr<router> get_src_router();
 
-    router* get_dst_router();
+    std::shared_ptr<router> get_dst_router();
 
-    router_interface* get_src_if();
+    std::shared_ptr<router_interface> get_src_if();
 
-    router_interface* get_dst_if();
+    std::shared_ptr<router_interface> get_dst_if();
 
-    int create_link(router* src_router, router_interface* src_if, router* dst_router, router_interface* dst_if, double link_delay, double link_weight);
+    int create_link(std::shared_ptr<router> src_router, std::shared_ptr<router_interface> src_if, std::shared_ptr<router> dst_router, std::shared_ptr<router_interface> dst_if, double link_delay, double link_weight);
 
     private:
     int link_id;
-    router* src_router;
-    router* dst_router;
-    router_interface* src_interface;
-    router_interface* dst_interface; 
+    std::shared_ptr<router> src_router;
+    std::shared_ptr<router> dst_router;
+    std::shared_ptr<router_interface> src_interface;
+    std::shared_ptr<router_interface> dst_interface; 
     double link_delay;
     double link_cost;
 };

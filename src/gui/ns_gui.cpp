@@ -112,11 +112,6 @@ void ns_gui::draw_nodes(){
 void ns_gui::draw_links(){
     for (auto& link : to_draw_linkList) {
         
-        //int source_id = link->get_src_router()->get_node_id();
-        //int source_if_id = link->get_src_if()->get_interface_id();
-        //int dest_id = link->get_dst_router()->get_node_id();
-        //int dest_if_id = link->get_dst_if()->get_interface_id();
-        
         auto link_start = to_draw_nodeList.at(link->get_src_router());
         auto link_end = to_draw_nodeList.at(link->get_dst_router());
         

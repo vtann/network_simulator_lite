@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <memory>
 
 #ifndef __NS_NAMESPACE_H__
 #define __NS_NAMESPACE_H__
@@ -33,9 +34,9 @@ namespace ns_ns
     const int ip_header_checksum_offset = 24;  
     const int src_network_address_offset = 26;  
     const int dst_network_address_offset = 30;  
-    typedef std::vector<router*> routers;
-    typedef std::vector<router_interface*> interfaces;
-    typedef std::vector<router_link*> links;
+    typedef std::vector<std::shared_ptr<router> > routers;
+    typedef std::vector<std::shared_ptr<router_interface> > interfaces;
+    typedef std::vector<std::shared_ptr<router_link> > links;
     typedef std::vector<ethr_pkt*> packets; 
     enum graph_type
     {
