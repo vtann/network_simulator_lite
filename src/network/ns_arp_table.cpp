@@ -3,10 +3,13 @@
 void arp_table::add_arp_table_entry(std::string gw_nw_addr, std::string gw_mac_addr)
 {
     arp_entry *element = new arp_entry; 
-    
-    element->gateway_ip_address = gw_nw_addr;
-    element->gateway_mac_address = gw_mac_addr;
-    list_arp_table.push_back(element);
+ 
+    if (false == (is_arp_present(gw_nw_addr)))
+    {    
+        element->gateway_ip_address = gw_nw_addr;
+        element->gateway_mac_address = gw_mac_addr;
+        list_arp_table.push_back(element);
+    }
 }
     
 std::list<arp_entry*> arp_table::get_arp_table()
@@ -29,6 +32,18 @@ std::string arp_table::find_entry(std::string gw_ip_address)
         }
     } 
     return NULL;
+}
+
+bool arp_table::is_arp_present(std::string gw_ip_address) 
+{
+    for (std::list<arp_entry*>::iterator index = list_arp_table.begin(); index != list_arp_table.end(); index++)
+    {
+        if (0 == gw_ip_address.compare((*index)->gateway_ip_address))
+        {
+            return true;  
+        }
+    } 
+    return false;
 }
 
 void arp_table::dump_arp_table_entries(std::ostream& arp_file)

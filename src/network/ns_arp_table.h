@@ -27,6 +27,8 @@ class arp_table
     std::string find_entry(std::string gw_ip_address);
 
     void dump_arp_table_entries(std::ostream& arp_file);
+
+    bool is_arp_present(std::string gw_ip_address);
  
     private:
     std::list<arp_entry*> list_arp_table;
