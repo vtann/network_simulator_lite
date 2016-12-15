@@ -2,30 +2,32 @@
 #include <string>
 #include "ns_xml_parser.h"
 
-XMLparser::XMLparser(const char* filepath) 
-{
+XMLparser::XMLparser(const char* filepath) {
     this->filepath=filepath;
 }
 
+// Class destructor
 XMLparser::~XMLparser() { }
 
+// Load xml file to memory
 int XMLparser::load() {
     eResult = xmlDoc.LoadFile(this->filepath);
     XMLCheckResult(eResult);
-    
+
     return OK;
 }
 
 int XMLparser::process(std::shared_ptr<router_network> rn) {
-    
-    // Node
+
+    // Load network nodes
     XMLHandle docHandle(xmlDoc);
     XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
-    
-    int nodeID, numbInterfaces; 
+
+    int nodeID, numbInterfaces;
     double xAxis, yAxis;
+    // Load consecutive nodes
     while (nodeElement) {
-        
+      // Extract node attributes
         eResult = nodeElement->QueryIntAttribute("id", &nodeID);
         XMLCheckResult(eResult);
 
@@ -37,23 +39,25 @@ int XMLparser::process(std::shared_ptr<router_network> rn) {
 
         eResult = nodeElement->QueryDoubleAttribute("y", &yAxis);
         XMLCheckResult(eResult);
-    
+
+        // Add node to network simulator
         std::shared_ptr<router> newRouter(new router(nodeID, numbInterfaces, xAxis, yAxis));
         rn->add_router(newRouter);
-        
-        // Interface
+
         XMLHandle ieHandle(nodeElement);
         XMLElement* interfaceElement = ieHandle.FirstChildElement("interface").ToElement();
-    
+
         int interfaceID, mask, interfaceQueue;
         double interfaceSpeed;
         std::string mac, ip;
         const char* szAttributeText = 0;
 
-        while (interfaceElement != 0){
+        // Load all interfaces of each node
+        while (interfaceElement != 0) {
             eResult = interfaceElement->QueryIntAttribute("id", &interfaceID);
             XMLCheckResult(eResult);
 
+            // Extract interface attributes
             szAttributeText = interfaceElement->Attribute("mac");
             if (szAttributeText == 0) return XML_ERROR_PARSING_ATTRIBUTE;
             mac = szAttributeText;
@@ -71,6 +75,7 @@ int XMLparser::process(std::shared_ptr<router_network> rn) {
             eResult = interfaceElement->QueryDoubleAttribute("speed", &interfaceSpeed);
             XMLCheckResult(eResult);
 
+            // Add and link interfaces to respective node
             std::shared_ptr<router_interface> newInterface(new router_interface(nodeID, interfaceID, mac, ip, mask, interfaceQueue, interfaceSpeed));
             newRouter->add_interface(newInterface);
 
@@ -78,8 +83,8 @@ int XMLparser::process(std::shared_ptr<router_network> rn) {
         }
         nodeElement = nodeElement->NextSiblingElement("node");
     }
-    
-    // Link
+
+    // Load links between nodes
     XMLElement* linkElement = docHandle.FirstChild().FirstChildElement("link").ToElement();
     int linkID, sourceNodeID, sourceInterfaceID, destNodeID, destInterfaceID;
     std::string source, destination;
@@ -91,7 +96,7 @@ int XMLparser::process(std::shared_ptr<router_network> rn) {
     while (linkElement) {
         eResult = linkElement->QueryIntAttribute("id", &linkID);
         XMLCheckResult(eResult);
-        
+        // Extract link attributes
         szAttributeText = linkElement->Attribute("source");
         if (szAttributeText == 0) return XML_ERROR_PARSING_ATTRIBUTE;
         source = szAttributeText;
@@ -116,18 +121,22 @@ int XMLparser::process(std::shared_ptr<router_network> rn) {
         eResult = linkElement->QueryDoubleAttribute("cost", &linkCost);
         XMLCheckResult(eResult);
 
+        // Add link to network simulator
         std::shared_ptr<router_link> newLink(new router_link(linkID));
         newLink->create_link(sourceNode, sourceInterface, destNode, destInterface, linkDelay, linkCost);
         rn->add_link(newLink);
-        
+
         linkElement = linkElement->NextSiblingElement("link");
     }
-    
+
     return OK;
 }
 
-std::vector<std::string> XMLparser::get_nodeAndinterfaceID(std::string param)
-{
+/**
+ * Extract node and interface id from link element's source and destination string attribute
+ * for example, "2.1" implies node_id = 2 and interface_id =1
+ */
+std::vector<std::string> XMLparser::get_nodeAndinterfaceID(std::string param) {
     size_t pos = 0;
     std::string nodeID;
     std::string interfaceID;
