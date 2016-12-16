@@ -12,6 +12,8 @@
 
 #include "../ns_namespace.h"
 
+#include "../util/ns_sim_utils.h"
+
 #ifndef __NS_NODE_ROUTER_IF_H__
 #define __NS_NODE_ROUTER_IF_H__
 
