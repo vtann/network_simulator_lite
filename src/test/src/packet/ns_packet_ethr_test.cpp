@@ -142,7 +142,7 @@ TEST(test_ethr_packet, hex_string_to_int_conversion)
 TEST(test_routing_table, routing_table_creation)
 {
     routing_table r_table;
-    r_table.add_routing_table_entry("3.3.3.3", 24, 1, 2, "1.1.1.1");
+    r_table.add_routing_table_entry("3.3.3.3", 24, 1, 2, 2, "1.1.1.1");
      
     std::list<routing_entry*> table = r_table.get_routing_table(); 
     for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
@@ -151,6 +151,7 @@ TEST(test_routing_table, routing_table_creation)
         EXPECT_EQ(24, (*index)->network_mask);  
         EXPECT_EQ(1, (*index)->outgoing_if_id);  
         EXPECT_EQ(2, (*index)->gateway_if_id);  
+        EXPECT_EQ(2, (*index)->gateway_router_id);
         EXPECT_EQ("1.1.1.1", (*index)->gateway_ip_address);  
     }                
 } 
@@ -158,8 +159,7 @@ TEST(test_routing_table, routing_table_creation)
 TEST(test_packet_routing, routing_packet)
 {
     routing_table r_table;
-    unsigned char packet[64] = {0, 10, 255, 0, 0, 2, 1, 2, 3, 4, 5, 6, 8, 0, 69, 56, 0, 64, 0, 100, 64, 100, 253, 254, 255, 255, 1, 1, 1, 1, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    r_table.add_routing_table_entry("3.3.3.3", 24, 1, 2, "1.1.1.1");
+    r_table.add_routing_table_entry("3.3.3.3", 24, 1, 2, 2, "1.1.1.1");
      
     std::list<routing_entry*> table = r_table.get_routing_table(); 
     for (std::list<routing_entry*>::iterator index = table.begin(); index != table.end(); index++)
@@ -168,6 +168,7 @@ TEST(test_packet_routing, routing_packet)
         EXPECT_EQ(24, (*index)->network_mask);  
         EXPECT_EQ(1, (*index)->outgoing_if_id);  
         EXPECT_EQ(2, (*index)->gateway_if_id);  
+        EXPECT_EQ(2, (*index)->gateway_router_id);
         EXPECT_EQ("1.1.1.1", (*index)->gateway_ip_address);  
     }
 }
