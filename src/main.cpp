@@ -22,6 +22,8 @@
 pthread_mutex_t thread_mutex;
 pthread_mutex_t result_mutex;
 
+bool g_enable_logs = false;
+
 int main(int argc, char* argv[])
 {
     // Check the number of parameters.
@@ -35,6 +37,19 @@ int main(int argc, char* argv[])
     {
         // Create XML parser class with input XML file argument.
         XMLparser xml(argv[1]);
+
+        // Check logging
+        remove("logs/ns_packet_logs.txt");
+        if (3 == argc)
+        {
+            std::string logs = "log_enable";
+     
+            if (0 == logs.compare(argv[2]))
+            {
+                // Enable logging
+                g_enable_logs = true;
+            }
+        }
 
         // Create a network class object. It is needed to created routing table and arp table.
         std::shared_ptr<router_network> rn(new router_network);
@@ -92,3 +107,4 @@ int main(int argc, char* argv[])
         return OK;
     }
 }
+

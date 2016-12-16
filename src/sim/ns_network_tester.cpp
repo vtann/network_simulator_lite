@@ -43,7 +43,8 @@ void* network_test::create_sender_features(void* router_index)
     int* index = (int*) router_index;
     std::shared_ptr<router> rou = r->get_router(*index);
     
-    packet_sender(this->r, rou);
+    packet_send pkt_se;
+    pkt_se.packet_sender(this->r, rou);
 
     return return_value; 
 }
@@ -59,5 +60,6 @@ void* network_test::create_receiver_features(void* router_index)
     
     return return_value; 
 }
+
 
 

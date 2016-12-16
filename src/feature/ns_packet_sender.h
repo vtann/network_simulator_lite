@@ -23,6 +23,11 @@
 #ifndef __NS_PACKET_SENDER_H__
 #define __NS_PACKET_SENDER_H__
 
-void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r);
+class packet_send
+{
+    public:
+
+    void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r);
+}; 
 
 #endif //__NS_PACKET_SENDER_H__
