@@ -22,27 +22,31 @@ using namespace ns_ns;
  */
 class ns_gui {
 public:
+    /**
+     * Class constructor: sets window size, node colors and text properties for GUI
+     */
     ns_gui();
 
     ~ns_gui();
 
     /**
-     * Generate basic layout and apply scaling for GUI
+     * Generate basic window layout and apply scaling for GUI
+     * @param std::shared_ptr<router_network> - shared pointer to router_network object
      */
     void generate_layout(std::shared_ptr<router_network> rn);
 
     /**
-     * Render node
+     * Render nodes on the GUI
      */
     void draw_nodes();
 
     /**
-     * Render text boxes to display results
+     * Render text boxes on the window to display results
      */
     void draw_textBoxes();
 
     /**
-     * Render links between nodes and interface ip addresses
+     * Render links between nodes and interface ip addresses on the GUI
      */
     void draw_links();
 
