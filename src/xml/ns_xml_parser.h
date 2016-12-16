@@ -24,32 +24,32 @@ using namespace ns_ns;
 /**
  * Handles the parsing of an xml to retrieve the network topology
  */
-class XMLparser{
+class XMLparser {
 public:
-	/**
-	 * Constructor takes the filepath of the xml to parse
-	 */
+    /**
+     * Constructor takes the filepath of the xml to parse
+     */
     XMLparser(const char* filepath);
 
     ~XMLparser();
 
-	/**
+    /**
      * Loads the xml into memory
      */
     int load();
 
-	/**
+    /**
      * Parses the loaded xml into the network simulator
      */
     int process(std::shared_ptr<router_network> rn);
 
-	/**
+    /**
      * extracts node and interface id from link element's source and destination string attribute
      * @param String - Containg links source/destination attributes
      */
     std::vector<std::string> get_nodeAndinterfaceID(std::string param);
 
-	/**
+    /**
      * Get path of the XML file entered as command line argument
      * Returns the filepath of the loaded xml
      */
