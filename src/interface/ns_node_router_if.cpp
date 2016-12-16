@@ -2,6 +2,8 @@
 
 using namespace ns_ns;
 
+extern bool g_enable_logs;
+
 /*! \fn router_interface(int node_id, int interface_id, std::string mac, std::string ip, int mask, int if_queue, double if_speed) : node_interface(interface_id)
  *  \brief A constructor function which creates a router object.
  *  \param interface_id, unique identifier for router interface.
@@ -208,6 +210,7 @@ void router_interface::copy_packet_to_send_ring_buffer(packet_buf *pkt)
     else 
     {
         // Drop the packet and update link parameters
+        LOG_MESSAGE("Packet not sent due to buffer overflow."); 
     }  
 }
 
@@ -231,6 +234,7 @@ void router_interface::copy_packet_to_recv_ring_buffer(packet_buf *pkt)
     else 
     {
         // Drop the packet and update link parameters
+        LOG_MESSAGE("Packet not sent due to buffer overflow."); 
     }  
 }
 

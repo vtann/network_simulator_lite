@@ -4,7 +4,9 @@ extern pthread_mutex_t thread_mutex;
 
 using namespace ns_ns;
 
-void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r)
+extern bool g_enable_logs;
+
+void packet_send::packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r)
 {
     routing_table* rt;
     std::list<routing_entry*> re;
@@ -20,7 +22,6 @@ void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r
     at = r->get_arp_table();    
     re = rt->get_routing_table(); 
    
-    // rt->dump_routing_table_entries(); 
     for (std::list<routing_entry*>::iterator index = re.begin(); index != re.end(); index++)
     {
         std::string dst_mac = at->find_entry((*index)->gateway_ip_address); 
@@ -30,11 +31,10 @@ void packet_sender(std::shared_ptr<router_network> rn, std::shared_ptr<router> r
         int gw_router_id = (*index)->gateway_router_id; 
         int gw_if_id = (*index)->gateway_if_id;
          
-        //std::cout << "SRC MAC: " << src_mac 
-        //          << " DST MAC: " << dst_mac
-        //          << " SRC IP: " << src_ip
-        //          << " DST_IP: " << dst_ip
-        //          << std::endl;  
+        LOG_MESSAGE("SRC MAC: " << src_mac 
+                    << " DST MAC: " << dst_mac
+                    << " SRC IP: " << src_ip
+                    << " DST_IP: " << dst_ip);  
         pkt.construct_pkt(send_pkt->pkt_buf, src_mac, dst_mac, src_ip, dst_ip);
         gettimeofday(send_pkt->timestamp, NULL); 
          

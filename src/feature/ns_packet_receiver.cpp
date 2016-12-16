@@ -4,6 +4,8 @@ extern pthread_mutex_t thread_mutex;
 
 class ethr_pkt;
 
+extern bool g_enable_logs;
+
 void packet_receiver::packet_poller(std::shared_ptr<router_network> r_n, std::shared_ptr<router> r)
 {
     timer r_timer;
@@ -51,7 +53,11 @@ void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, std::
    
     if (0 != pkt_dst_mac_addr.compare(if_mac_addr))
     {
-        // Drop the packet and don't update delay
+        // Drop the packet and don't update delay.
+        LOG_MESSAGE("Dropped received packet due to MAC coonflicts. REC_DST_MAC:"
+                    << pkt_dst_mac_addr
+                    << "REC_IF_MAC"
+                    << if_mac_addr);
     }
       
     std::string if_ip_addr = rec_interface->get_network_address();
@@ -71,11 +77,10 @@ void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, std::
 
     if (0 == pkt_dst_ip_addr.compare(if_ip_addr))
     {
-        // std::cout << "REC IF MAC: " << if_mac_addr
-        //          << " REC PKT DST MAC: " << pkt_dst_mac_addr 
-        //          << " REC PKT SRC IP: " << pkt_src_ip_addr
-        //          << " REC PKT DST IP: " << pkt_dst_ip_addr
-        //          << std::endl;
+        LOG_MESSAGE("REC IF MAC: " << if_mac_addr
+                     << " REC PKT DST MAC: " << pkt_dst_mac_addr 
+                     << " REC PKT SRC IP: " << pkt_src_ip_addr
+                     << " REC PKT DST IP: " << pkt_dst_ip_addr);
   
         // Check ttl  
         // Calculate delay
@@ -83,7 +88,6 @@ void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, std::
  
         gettimeofday(&end_time, NULL);
         double f_secs = calculate_delay(pkt->timestamp, &end_time);  
-        //accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, (delay + (f_secs/1000)));
         accumulate_total_delay(pkt_src_ip_addr, pkt_dst_ip_addr, rec_interface->get_router_id(), (delay + (f_secs/1000)));
     }
     else
@@ -107,7 +111,6 @@ void packet_receiver::received_packet(std::shared_ptr<router_network> r_n, std::
                 rec_pkt.set_dst_mac_address(pkt->pkt_buf, dst_mac);   
                 rec_pkt.set_ttl(pkt->pkt_buf, ttl);
                 
-                //accumulate_delay(pkt_src_ip_addr, pkt_dst_ip_addr, delay);
                 accumulate_total_delay(pkt_src_ip_addr, pkt_dst_ip_addr, 0, delay);
 
                 // Put it in the respective queue 
